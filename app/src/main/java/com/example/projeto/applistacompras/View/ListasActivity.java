@@ -13,6 +13,8 @@ import com.example.projeto.applistacompras.R;
 
 public class ListasActivity extends AppCompatActivity {
 
+    private  String teste;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
