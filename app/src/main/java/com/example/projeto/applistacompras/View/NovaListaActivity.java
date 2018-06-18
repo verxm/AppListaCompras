@@ -9,11 +9,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.projeto.applistacompras.Adapters.ItemLista;
+import com.example.projeto.applistacompras.Model.Item;
 import com.example.projeto.applistacompras.R;
+
+import java.util.List;
 
 public class NovaListaActivity extends AppCompatActivity {
 
-    private EditText etNomeItem, etQuantidade;
+    private EditText etItem, etQuantidade;
     private ListView lvItens;
 
 
@@ -24,7 +28,7 @@ public class NovaListaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        etNomeItem.findViewById(R.id.etNomeItem);
+        etItem.findViewById(R.id.etItem);
         etQuantidade.findViewById(R.id.etQuantidade);
         lvItens.findViewById(R.id.lvItens);
 
@@ -36,6 +40,11 @@ public class NovaListaActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    public void carregarItens(){
+        ItemLista adapter = new ItemLista(this, );
+        lvItens.setAdapter( adapter );
     }
 
 }

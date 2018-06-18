@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -42,16 +42,16 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/etNomeItem"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2" />
+                android:layout_weight="2"
+                android:id="@+id/etItem"/>
 
             <EditText
+                android:id="@+id/etQuantidade"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/etQuantidade"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -69,14 +69,44 @@
                 />
         </LinearLayout>
 
-
-        <ListView
-            android:id="@+id/lvItens"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15sp"></ListView>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/lvItens"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/cnlItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="ITEM:"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/cnlQuantidade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Quantidade:"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/cnlBtnExcluir"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:layout_gravity="center_vertical"
+                android:background="@android:drawable/ic_menu_delete"
+                android:backgroundTint="@color/colorAccent"/>
+        </LinearLayout>
 
 
     </LinearLayout>
 
-</LinearLayout>
+
+</ScrollView>

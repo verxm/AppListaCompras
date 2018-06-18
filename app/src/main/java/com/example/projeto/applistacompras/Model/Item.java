@@ -1,17 +1,19 @@
 package com.example.projeto.applistacompras.Model;
 
 public class Item {
-    private int id;
+    private int id, codLista;
     private String quantidade;
     private String nome;
     private boolean check;
 
 
+    public int getCodLista() {
+        return codLista;
+    }
 
-
-
-
-
+    public void setCodLista(int codLista) {
+        this.codLista = codLista;
+    }
 
     public int getId() {
         return id;
