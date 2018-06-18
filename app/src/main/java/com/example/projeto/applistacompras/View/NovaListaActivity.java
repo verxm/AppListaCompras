@@ -6,10 +6,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.projeto.applistacompras.R;
 
 public class NovaListaActivity extends AppCompatActivity {
+
+    private EditText etNomeItem, etQuantidade;
+    private ListView lvItens;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +23,10 @@ public class NovaListaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nova_lista);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        etNomeItem.findViewById(R.id.etNomeItem);
+        etQuantidade.findViewById(R.id.etQuantidade);
+        lvItens.findViewById(R.id.lvItens);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

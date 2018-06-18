@@ -1,8 +1,8 @@
-package com.example.projeto.applistacompras.Controller;
+package com.example.projeto.applistacompras.Model;
 
 public class Item {
     private int id;
-    private double quantidade;
+    private String quantidade;
     private String nome;
     private boolean check;
 
@@ -21,11 +21,11 @@ public class Item {
         this.id = id;
     }
 
-    public double getQuantidade() {
+    public String getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(double quantidade) {
+    public void setQuantidade(String quantidade) {
         this.quantidade = quantidade;
     }
 

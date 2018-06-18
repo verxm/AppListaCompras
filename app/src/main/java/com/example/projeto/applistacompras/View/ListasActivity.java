@@ -1,5 +1,6 @@
 package com.example.projeto.applistacompras.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,12 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.projeto.applistacompras.R;
 
 public class ListasActivity extends AppCompatActivity {
 
-    private  String teste;
+    private ListView lvListaComprasPendentes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +25,16 @@ public class ListasActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        lvListaComprasPendentes.findViewById(R.id.lvListaComprasPendentes);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent i = new Intent(ListasActivity.this, NovaListaActivity.class);
+                startActivity(i);
             }
         });
     }
