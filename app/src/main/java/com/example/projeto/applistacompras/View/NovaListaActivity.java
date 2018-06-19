@@ -42,9 +42,5 @@ public class NovaListaActivity extends AppCompatActivity {
         });
     }
 
-    public void carregarItens(){
-        ItemLista adapter = new ItemLista(this, );
-        lvItens.setAdapter( adapter );
-    }
 
 }
