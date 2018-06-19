@@ -16,11 +16,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.projeto.applistacompras.Controller.ListaDAO;
+import com.example.projeto.applistacompras.Model.Lista;
 import com.example.projeto.applistacompras.R;
 
 public class ListasActivity extends AppCompatActivity {
 
     private ListView lvListaComprasPendentes;
+    private Lista lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +42,17 @@ public class ListasActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListasActivity.this);
                 alerta.setTitle("Quando as compras serão realizadas?");
-                DatePicker calendario = new DatePicker(ListasActivity.this);
+                final DatePicker calendario = new DatePicker(ListasActivity.this);
                 alerta.setView(calendario);
 
                 alerta.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        int dia = calendario.getDayOfMonth();
+                        int mes = calendario.getMonth();
+                        int ano = calendario.getYear();
+                        String data = dia + " " + mes + " " + ano;
                         Intent intent = new Intent(ListasActivity.this, NovaListaActivity.class);
-                        //terminar
                         startActivity(intent);
                     }
                 });
