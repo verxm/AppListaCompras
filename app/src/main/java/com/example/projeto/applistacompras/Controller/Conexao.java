@@ -25,7 +25,6 @@ public class Conexao extends SQLiteOpenHelper {
         return db.rawQuery(sql, null);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS lista (" +

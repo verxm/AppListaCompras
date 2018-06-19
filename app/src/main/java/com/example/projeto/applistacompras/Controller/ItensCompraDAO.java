@@ -13,33 +13,6 @@ import java.util.List;
 
 public class ItensCompraDAO {
 
-    public static void excluirDados(final int id, Item p, final Context contexto) {
-
-        String texto = "Nome: " + p.getNome() + "\n" +
-                "Quantidade: " + p.getQuantidade() + "\n" +
-                "\n\nDeseja excluir o item?";
-
-        AlertDialog.Builder alerta = new AlertDialog.Builder(contexto);
-        alerta.setTitle("Excluir Item");
-        alerta.setIcon(android.R.drawable.ic_dialog_alert);
-        alerta.setMessage(texto);
-
-
-        alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                excluir(id, contexto);
-                NovaListaActivity nl = (NovaListaActivity) contexto;
-                nl.carregarItens();
-
-            }
-
-
-        });
-        alerta.setNegativeButton("Não", null);
-        alerta.show();
-    }
-
     public static void editar(Item p, Context contexto) {
         String sql = "UPDATE item SET " +
                 " nome = '" + p.getNome() + "', " +
@@ -58,7 +31,6 @@ public class ItensCompraDAO {
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
     }
-
 
     public static void inserir(Item p, Context contexto) {
 
