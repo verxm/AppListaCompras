@@ -9,11 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.projeto.applistacompras.Adapters.ItemLista;
-import com.example.projeto.applistacompras.Model.Item;
 import com.example.projeto.applistacompras.R;
-
-import java.util.List;
 
 public class NovaListaActivity extends AppCompatActivity {
 
@@ -28,6 +24,8 @@ public class NovaListaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // CORRIGIR
+        .
         etItem.findViewById(R.id.etItem);
         etQuantidade.findViewById(R.id.etQuantidade);
         lvItens.findViewById(R.id.lvItens);

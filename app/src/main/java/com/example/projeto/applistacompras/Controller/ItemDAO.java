@@ -11,7 +11,7 @@ import com.example.projeto.applistacompras.View.NovaListaActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItensCompraDAO {
+public class ItemDAO {
 
     public static void editar(Item p, Context contexto) {
         String sql = "UPDATE item SET " +
