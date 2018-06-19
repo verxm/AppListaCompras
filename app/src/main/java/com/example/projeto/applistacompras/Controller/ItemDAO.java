@@ -13,8 +13,6 @@ import java.util.List;
 
 public class ItemDAO {
 
-
-
     public static void editar(Item p, Context contexto) {
         String sql = "UPDATE item SET " +
                 " nome = '" + p.getNome() + "', " +
@@ -33,7 +31,6 @@ public class ItemDAO {
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
     }
-
 
     public static void inserir(Item p, Context contexto) {
 

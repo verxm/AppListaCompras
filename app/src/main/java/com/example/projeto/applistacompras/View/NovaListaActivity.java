@@ -6,15 +6,24 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.projeto.applistacompras.Adapters.ItemLista;
+import com.example.projeto.applistacompras.Controller.ItemDAO;
+import com.example.projeto.applistacompras.Model.Item;
 import com.example.projeto.applistacompras.R;
+
+import java.util.List;
 
 public class NovaListaActivity extends AppCompatActivity {
 
     private EditText etItem, etQuantidade;
+    private Button btnAdicionar;
     private ListView lvItens;
+    private Item item;
+
 
 
     @Override
@@ -24,9 +33,17 @@ public class NovaListaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        etItem = findViewById(R.id.etItem);
-        etQuantidade = findViewById(R.id.etQuantidade);
-        lvItens = findViewById(R.id.lvItens);
+        etItem = (EditText) findViewById(R.id.etItem);
+        etQuantidade = (EditText) findViewById(R.id.etQuantidade);
+        lvItens = (ListView) findViewById(R.id.lvItens);
+        btnAdicionar = (Button) findViewById(R.id.btnAdicionar);
+
+        btnAdicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adicionar();
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -38,5 +55,19 @@ public class NovaListaActivity extends AppCompatActivity {
         });
     }
 
+    public void carregarItens(List<Item> lista){
+        ItemLista adapter = new ItemLista(this, lista );
+        lvItens.setAdapter( adapter );
+    }
+
+    private void adicionar() {
+        if (item == null)
+            item = new Item();
+
+        item.setNome(etItem.getText().toString());
+        item.setQuantidade(etQuantidade.getText().toString());
+        ItemDAO.inserir(item, this);
+
+    }
 
 }
