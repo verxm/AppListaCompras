@@ -24,11 +24,9 @@ public class NovaListaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // CORRIGIR
-        .
-        etItem.findViewById(R.id.etItem);
-        etQuantidade.findViewById(R.id.etQuantidade);
-        lvItens.findViewById(R.id.lvItens);
+        etItem = findViewById(R.id.etItem);
+        etQuantidade = findViewById(R.id.etQuantidade);
+        lvItens = findViewById(R.id.lvItens);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

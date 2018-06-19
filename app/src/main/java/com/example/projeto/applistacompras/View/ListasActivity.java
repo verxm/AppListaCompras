@@ -16,7 +16,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.projeto.applistacompras.Controller.ListaDAO;
 import com.example.projeto.applistacompras.R;
+
+import java.util.Calendar;
 
 public class ListasActivity extends AppCompatActivity {
 
@@ -42,11 +45,20 @@ public class ListasActivity extends AppCompatActivity {
                 DatePicker calendario = new DatePicker(ListasActivity.this);
                 alerta.setView(calendario);
 
+                int ano = calendario.getYear();
+                int mes = calendario.getMonth();
+                int dia = calendario.getDayOfMonth();
+
+                final String data = dia + "/" + mes + "/" + ano;
+
                 alerta.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        ListaDAO.criarLista(data, ListasActivity.this);
+                        int idLista = ListaDAO.buscarMaiorIDdaLista(ListasActivity.this);
                         Intent intent = new Intent(ListasActivity.this, NovaListaActivity.class);
-                        //terminar
+                        intent.putExtra("data", data);
+                        intent.putExtra("idLista", idLista);
                         startActivity(intent);
                     }
                 });
