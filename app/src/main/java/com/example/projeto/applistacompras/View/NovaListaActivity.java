@@ -15,6 +15,7 @@ import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Model.Item;
 import com.example.projeto.applistacompras.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NovaListaActivity extends AppCompatActivity {
@@ -23,8 +24,8 @@ public class NovaListaActivity extends AppCompatActivity {
     private Button btnAdicionar;
     private ListView lvItens;
     private Item item;
-
-
+    private List<Item> lista;
+    private int codLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +34,14 @@ public class NovaListaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        codLista = getIntent().getExtras().getInt("idLista");
+
         etItem = (EditText) findViewById(R.id.etItem);
         etQuantidade = (EditText) findViewById(R.id.etQuantidade);
         lvItens = (ListView) findViewById(R.id.lvItens);
         btnAdicionar = (Button) findViewById(R.id.btnAdicionar);
+
+        lista = new ArrayList<>();
 
         btnAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +60,8 @@ public class NovaListaActivity extends AppCompatActivity {
         });
     }
 
-    public void carregarItens(List<Item> lista){
+    public void carregarItens(){
+        lista = ItemDAO.listar(codLista, this);
         ItemLista adapter = new ItemLista(this, lista );
         lvItens.setAdapter( adapter );
     }
@@ -66,8 +72,8 @@ public class NovaListaActivity extends AppCompatActivity {
 
         item.setNome(etItem.getText().toString());
         item.setQuantidade(etQuantidade.getText().toString());
+        item.setCodLista(codLista);
         ItemDAO.inserir(item, this);
-
+        carregarItens();
     }
-
 }

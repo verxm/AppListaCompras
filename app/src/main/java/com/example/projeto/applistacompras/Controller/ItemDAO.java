@@ -42,5 +42,32 @@ public class ItemDAO {
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
     }
+    public static List<Item> listar(int codLista, Context contexto) {
+        String sql = " SELECT * FROM item " +
+                " WHERE codLista = " + codLista +
+                " ORDER BY nome";
+        Conexao conn = new Conexao(contexto);
+        Cursor tabela = conn.consulta(sql);
+
+        List<Item> listaDeCidades = new ArrayList<>();
+
+        if (tabela.getCount() > 0) {
+            tabela.moveToFirst();
+
+            do {
+                Item cid = new Item();
+                cid.setId(tabela.getInt(0));
+                cid.setNome(tabela.getString(1));
+                cid.setCodLista(tabela.getInt(2));
+
+                listaDeCidades.add(cid);
+
+            } while (tabela.moveToNext());
+
+        }
+
+        return listaDeCidades;
+    }
+
 
 }

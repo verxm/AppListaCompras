@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Model.Item;
 import com.example.projeto.applistacompras.R;
 
@@ -60,7 +61,7 @@ public class ItemLista extends BaseAdapter {
             suporte.btnExcluir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    ItemDAO.excluir(item.getId(), contexto);
                 }
 
             });

@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,6 +59,7 @@ public class ListasActivity extends AppCompatActivity {
                         Intent intent = new Intent(ListasActivity.this, NovaListaActivity.class);
                         intent.putExtra("data", data);
                         intent.putExtra("idLista", idLista);
+                        Log.i("lista", "id: "+ idLista);
                         startActivity(intent);
                     }
                 });

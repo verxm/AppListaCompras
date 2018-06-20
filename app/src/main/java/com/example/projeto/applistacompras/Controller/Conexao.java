@@ -28,17 +28,21 @@ public class Conexao extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS lista (" +
-                " id INTEGER NOT NULL PRIMARY KEY, " +
+                " id INTEGER NOT NULL PRIMARY KEY , " +
                 " data TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS item (" +
-                " id INTEGER NOT NULL PRIMARY KEY," +
-                " nome TEXT NOT NULL, " +
+                " id INTEGER NOT NULL PRIMARY KEY ," +
+                " nome TEXT NOT NULL , " +
+                " quantidade TEXT , " +
                 " codLista INTEGER NOT NULL)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        if (i == 1) {
+            sqLiteDatabase.execSQL("DROP TABLE item");
+            onCreate(sqLiteDatabase);
+        }
     }
 }

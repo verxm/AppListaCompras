@@ -3,8 +3,12 @@ package com.example.projeto.applistacompras.Controller;
 import android.content.Context;
 import android.database.Cursor;
 
-public class ListaDAO {
+import com.example.projeto.applistacompras.Model.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListaDAO {
 
     public static boolean criarLista(String data, Context contexto){
         String sql = "INSERT INTO lista (data) VALUES ( '" + data + "' )";
@@ -20,10 +24,10 @@ public class ListaDAO {
         Conexao conn = new Conexao(contexto);
         Cursor c = conn.consulta(sql);
 
+        c.moveToFirst();
         int idMax = c.getInt(0);
         return idMax;
     }
 
-
-
 }
+
