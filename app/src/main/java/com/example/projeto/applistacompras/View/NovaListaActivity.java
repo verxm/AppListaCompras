@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 
 import com.example.projeto.applistacompras.Adapters.ItemLista;
 import com.example.projeto.applistacompras.Controller.ItemDAO;
+import com.example.projeto.applistacompras.Controller.ListaDAO;
 import com.example.projeto.applistacompras.Model.Item;
 import com.example.projeto.applistacompras.R;
 
@@ -25,7 +27,7 @@ public class NovaListaActivity extends AppCompatActivity {
     private ListView lvItens;
     private Item item;
     private List<Item> lista;
-    private int codLista;
+    private int idLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class NovaListaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        codLista = getIntent().getExtras().getInt("idLista");
+        idLista = getIntent().getExtras().getInt("idLista");
 
         etItem = (EditText) findViewById(R.id.etItem);
         etQuantidade = (EditText) findViewById(R.id.etQuantidade);
@@ -47,10 +49,11 @@ public class NovaListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 adicionar();
+                Log.i("inseriu?", "item" + item);
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,11 +63,25 @@ public class NovaListaActivity extends AppCompatActivity {
         });
     }
 
-    public void carregarItens(){
-        lista = ItemDAO.listar(codLista, this);
-        ItemLista adapter = new ItemLista(this, lista );
-        lvItens.setAdapter( adapter );
+
+    @Override
+    protected void onDestroy() {
+        ListaDAO.excluir(idLista,NovaListaActivity.this);
+
+        super.onDestroy();
     }
+
+    public void carregarItens() {
+        lista = ItemDAO.listar(idLista, this);
+
+
+    }
+
+
+
+
+
+
 
     private void adicionar() {
         if (item == null)
@@ -72,8 +89,9 @@ public class NovaListaActivity extends AppCompatActivity {
 
         item.setNome(etItem.getText().toString());
         item.setQuantidade(etQuantidade.getText().toString());
-        item.setCodLista(codLista);
+        item.setCodLista(idLista);
         ItemDAO.inserir(item, this);
         carregarItens();
     }
+
 }

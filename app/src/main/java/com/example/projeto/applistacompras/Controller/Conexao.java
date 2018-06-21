@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Conexao extends SQLiteOpenHelper {
 
     private static final  String NOME = "listaDeCompras";
-    private static final int VERSAO = 1;
+    private static final int VERSAO = 2;
 
     public Conexao(Context contexto) {
         super(contexto, NOME, null, VERSAO);

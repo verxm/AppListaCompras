@@ -7,6 +7,11 @@ public class Item {
     private boolean check;
 
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     public int getCodLista() {
         return codLista;
     }

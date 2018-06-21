@@ -32,12 +32,12 @@ public class ItemDAO {
         conn.executar(sql);
     }
 
-    public static void inserir(Item p, Context contexto) {
+    public static void inserir(Item item, Context contexto) {
 
         String sql = "INSERT INTO item ( nome, quantidade, codLista) " +
-                "VALUES ( '" + p.getNome() + "' , " +
-                "  '" + p.getQuantidade() + "' , " +
-                "   " + p.getCodLista() + " ) " ;
+                "VALUES ( '" + item.getNome() + "' , " +
+                "  '" + item.getQuantidade() + "' , " +
+                "   " + item.getCodLista() + " ) " ;
 
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);

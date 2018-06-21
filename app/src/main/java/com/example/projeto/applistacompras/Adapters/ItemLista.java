@@ -50,8 +50,7 @@ public class ItemLista extends BaseAdapter {
         final Item item = listaItens.get(i);
 
         if (view == null) {
-            view = inflater.inflate
-                    (R.layout.content_nova_lista, null);
+            view = inflater.inflate(R.layout.content_nova_lista, null);
             suporte = new ItemSuporte();
             suporte.etNome = view.findViewById(R.id.cnlItem);
             suporte.etQuantidade = view.findViewById(R.id.cnlQuantidade);
