@@ -1,5 +1,6 @@
 package com.example.projeto.applistacompras.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -9,10 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Model.Item;
 import com.example.projeto.applistacompras.R;
+import com.example.projeto.applistacompras.View.NovaListaActivity;
 
 import java.util.List;
 
@@ -50,28 +53,26 @@ public class ItemLista extends BaseAdapter {
         final Item item = listaItens.get(i);
 
         if (view == null) {
-            view = inflater.inflate(R.layout.content_nova_lista, null);
+            view = inflater.inflate(R.layout.layout_lista_itens, null);
             suporte = new ItemSuporte();
             suporte.etNome = view.findViewById(R.id.cnlItem);
             suporte.etQuantidade = view.findViewById(R.id.cnlQuantidade);
-            suporte.btnExcluir = view.findViewById(R.id.cnlExcluir);
+            suporte.btnExcluir = view.findViewById(R.id.cnlBtnExcluir);
             suporte.layout = view.findViewById(R.id.llLayout);
-
             suporte.btnExcluir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ItemDAO.excluir(item.getId(), contexto);
+                    Toast.makeText(contexto, "Item Excluído!", Toast.LENGTH_SHORT).show();
                 }
-
             });
             view.setTag(suporte);
-        }else {
+        } else {
             suporte = (ItemSuporte) view.getTag();
         }
 
-        suporte.etNome.setText(item.getNome());
-        suporte.etQuantidade.setText(item.getQuantidade());
-
+        suporte.etNome.setText("Item: " + item.getNome());
+        suporte.etQuantidade.setText("Quantidade: " + item.getQuantidade());
 
         if (i % 2 == 0) {
             suporte.layout.setBackgroundColor(Color.WHITE);
