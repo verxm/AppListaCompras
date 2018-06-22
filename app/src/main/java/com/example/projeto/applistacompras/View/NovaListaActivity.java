@@ -49,7 +49,6 @@ public class NovaListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 adicionar();
-                Log.i("inseriu?", "item" + item);
             }
         });
 
@@ -63,25 +62,17 @@ public class NovaListaActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onDestroy() {
         ListaDAO.excluir(idLista,NovaListaActivity.this);
-
         super.onDestroy();
     }
 
     public void carregarItens() {
         lista = ItemDAO.listar(idLista, this);
-
-
+        ItemLista itemLista = new ItemLista(this, lista);
+        lvItens.setAdapter(itemLista);
     }
-
-
-
-
-
-
 
     private void adicionar() {
         if (item == null)

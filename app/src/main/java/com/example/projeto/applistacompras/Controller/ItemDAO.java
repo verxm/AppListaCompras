@@ -49,24 +49,24 @@ public class ItemDAO {
         Conexao conn = new Conexao(contexto);
         Cursor tabela = conn.consulta(sql);
 
-        List<Item> listaDeCidades = new ArrayList<>();
+        List<Item> listaDeItens = new ArrayList<>();
 
         if (tabela.getCount() > 0) {
             tabela.moveToFirst();
 
             do {
-                Item cid = new Item();
-                cid.setId(tabela.getInt(0));
-                cid.setNome(tabela.getString(1));
-                cid.setCodLista(tabela.getInt(2));
+                Item item = new Item();
+                item.setId(tabela.getInt(0));
+                item.setNome(tabela.getString(1));
+                item.setCodLista(tabela.getInt(2));
 
-                listaDeCidades.add(cid);
+                listaDeItens.add(item);
 
             } while (tabela.moveToNext());
 
         }
 
-        return listaDeCidades;
+        return listaDeItens;
     }
 
 

@@ -54,8 +54,8 @@ public class ItemLista extends BaseAdapter {
             suporte = new ItemSuporte();
             suporte.etNome = view.findViewById(R.id.cnlItem);
             suporte.etQuantidade = view.findViewById(R.id.cnlQuantidade);
-            suporte.btnExcluir = view.findViewById(R.id.cnlBtnExcluir);
-            view.setTag(suporte);
+            suporte.btnExcluir = view.findViewById(R.id.cnlExcluir);
+            suporte.layout = view.findViewById(R.id.llLayout);
 
             suporte.btnExcluir.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,21 +64,19 @@ public class ItemLista extends BaseAdapter {
                 }
 
             });
-
             view.setTag(suporte);
-
-        } else {
+        }else {
             suporte = (ItemSuporte) view.getTag();
         }
+
         suporte.etNome.setText(item.getNome());
         suporte.etQuantidade.setText(item.getQuantidade());
 
+
         if (i % 2 == 0) {
-            suporte.layout.setBackgroundColor
-                    (Color.WHITE);
+            suporte.layout.setBackgroundColor(Color.WHITE);
         } else {
-            suporte.layout.setBackgroundColor
-                    (Color.rgb(230, 230, 230));
+            suporte.layout.setBackgroundColor(Color.rgb(230, 230, 230));
         }
 
         return view;

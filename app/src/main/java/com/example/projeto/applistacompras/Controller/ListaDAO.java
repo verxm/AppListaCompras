@@ -25,7 +25,6 @@ public class ListaDAO {
         return idMax;
     }
 
-
     public static void excluir(int id, Context contexto) {
 
         String sql = " DELETE FROM lista " +
@@ -34,7 +33,5 @@ public class ListaDAO {
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
     }
-
-
 
 }
