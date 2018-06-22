@@ -63,6 +63,7 @@ public class ItemLista extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     ItemDAO.excluir(item.getId(), contexto);
+                    notifyDataSetChanged();
                     Toast.makeText(contexto, "Item Excluído!", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -71,7 +72,7 @@ public class ItemLista extends BaseAdapter {
             suporte = (ItemSuporte) view.getTag();
         }
 
-        suporte.etNome.setText("Item: " + item.getNome());
+        suporte.etNome.setText("ITEM: " +item.getNome());
         suporte.etQuantidade.setText("Quantidade: " + item.getQuantidade());
 
         if (i % 2 == 0) {

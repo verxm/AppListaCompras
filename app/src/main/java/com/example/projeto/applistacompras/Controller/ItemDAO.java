@@ -58,7 +58,8 @@ public class ItemDAO {
                 Item item = new Item();
                 item.setId(tabela.getInt(0));
                 item.setNome(tabela.getString(1));
-                item.setCodLista(tabela.getInt(2));
+                item.setQuantidade(tabela.getString(2));
+                item.setCodLista(tabela.getInt(3));
 
                 listaDeItens.add(item);
 
