@@ -64,7 +64,7 @@ public class NovaListaActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        ListaDAO.excluir(idLista,NovaListaActivity.this);
+        ListaDAO.excluir(idLista, NovaListaActivity.this);
         super.onDestroy();
     }
 
@@ -72,6 +72,11 @@ public class NovaListaActivity extends AppCompatActivity {
         lista = ItemDAO.listar(idLista, this);
         ItemLista itemLista = new ItemLista(this, lista);
         lvItens.setAdapter(itemLista);
+    }
+
+    private void limpar() {
+        etItem.setText("");
+        etQuantidade.setText("");
     }
 
     private void adicionar() {
@@ -82,6 +87,7 @@ public class NovaListaActivity extends AppCompatActivity {
         item.setQuantidade(etQuantidade.getText().toString());
         item.setCodLista(idLista);
         ItemDAO.inserir(item, this);
+        limpar();
         carregarItens();
     }
 

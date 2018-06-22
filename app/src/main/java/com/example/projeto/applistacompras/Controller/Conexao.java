@@ -7,19 +7,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Conexao extends SQLiteOpenHelper {
 
-    private static final  String NOME = "listaDeCompras";
+    private static final String NOME = "listaDeCompras";
     private static final int VERSAO = 2;
 
     public Conexao(Context contexto) {
         super(contexto, NOME, null, VERSAO);
     }
 
-    public void executar(String sql){
+    public void executar(String sql) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(sql);
     }
 
-    public Cursor consulta(String sql){
+    public Cursor consulta(String sql) {
         SQLiteDatabase db = getReadableDatabase();
         onCreate(db);
         return db.rawQuery(sql, null);

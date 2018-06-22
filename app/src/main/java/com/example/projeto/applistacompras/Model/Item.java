@@ -9,7 +9,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return super.toString();
+        return nome;
     }
 
     public int getCodLista() {

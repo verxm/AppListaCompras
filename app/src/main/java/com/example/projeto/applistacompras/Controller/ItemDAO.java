@@ -27,7 +27,6 @@ public class ItemDAO {
 
         String sql = " DELETE FROM item " +
                 " WHERE id = " + id;
-
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
     }
@@ -37,11 +36,12 @@ public class ItemDAO {
         String sql = "INSERT INTO item ( nome, quantidade, codLista) " +
                 "VALUES ( '" + item.getNome() + "' , " +
                 "  '" + item.getQuantidade() + "' , " +
-                "   " + item.getCodLista() + " ) " ;
+                "   " + item.getCodLista() + " ) ";
 
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
     }
+
     public static List<Item> listar(int codLista, Context contexto) {
         String sql = " SELECT * FROM item " +
                 " WHERE codLista = " + codLista +
