@@ -79,20 +79,23 @@ public class ListasActivity extends AppCompatActivity {
 
     }
 
-
-
         private void carregarListaComprasPendentes(){
         lLista = ListaDAO.listar(this);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lLista);
         lvLista.setAdapter(adapter);
     }
 
+    @Override
+    protected void onStart() {
+        carregarListaComprasPendentes();
+        super.onStart();
+    }
 
-        @Override
+    @Override
         protected void onRestart() {
             super.onRestart();
             carregarListaComprasPendentes();
-        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

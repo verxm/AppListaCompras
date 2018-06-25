@@ -9,6 +9,10 @@ public class Lista {
     private String data;
     private ArrayList<Item> listaDeItens;
 
+    @Override
+    public String toString() {
+        return data;
+    }
 
     public int getId() {
         return id;

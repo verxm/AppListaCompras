@@ -6,11 +6,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.projeto.applistacompras.Adapters.ItemLista;
 import com.example.projeto.applistacompras.Controller.ItemDAO;
@@ -58,6 +58,7 @@ public class NovaListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(NovaListaActivity.this, ListasActivity.class);
+                Toast.makeText(NovaListaActivity.this ,"Lista Adicionada!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
