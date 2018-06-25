@@ -21,14 +21,17 @@ import android.widget.ListView;
 import com.example.projeto.applistacompras.Adapters.ItemLista;
 import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Controller.ListaDAO;
+import com.example.projeto.applistacompras.Model.Lista;
 import com.example.projeto.applistacompras.R;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class ListasActivity extends AppCompatActivity {
 
     private Context contexto;
-    private ListView lvListaComprasPendentes;
+    private ListView lvLista;
+    private List<Lista> lLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public class ListasActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        lvListaComprasPendentes = (ListView) findViewById(R.id.lvListaComprasPendentes);
+        lvLista = (ListView) findViewById(R.id.lvListas);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,9 +82,9 @@ public class ListasActivity extends AppCompatActivity {
 
 
         private void carregarListaComprasPendentes(){
-        lvListaComprasPendentes = ListaDAO.listar(this);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lvListaComprasPendentes);
-        lvListaComprasPendentes.setAdapter(adapter);
+        lLista = ListaDAO.listar(this);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lLista);
+        lvLista.setAdapter(adapter);
     }
 
 
@@ -97,6 +100,7 @@ public class ListasActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_listas, menu);
         return true;
 }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -113,7 +117,5 @@ public class ListasActivity extends AppCompatActivity {
     }
 }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
+
+
