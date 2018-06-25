@@ -1,5 +1,6 @@
 package com.example.projeto.applistacompras.View;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.projeto.applistacompras.Adapters.ItemLista;
+import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Controller.ListaDAO;
 import com.example.projeto.applistacompras.R;
 
@@ -23,6 +27,7 @@ import java.util.Calendar;
 
 public class ListasActivity extends AppCompatActivity {
 
+    private Context contexto;
     private ListView lvListaComprasPendentes;
 
     @Override
@@ -67,7 +72,24 @@ public class ListasActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
+
+
+
+        private void carregarListaComprasPendentes(){
+        lvListaComprasPendentes = ListaDAO.listar(this);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lvListaComprasPendentes);
+        lvListaComprasPendentes.setAdapter(adapter);
+    }
+
+
+        @Override
+        protected void onRestart() {
+            super.onRestart();
+            carregarListaComprasPendentes();
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,3 +112,8 @@ public class ListasActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }

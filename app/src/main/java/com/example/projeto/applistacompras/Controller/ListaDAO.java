@@ -3,6 +3,11 @@ package com.example.projeto.applistacompras.Controller;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.example.projeto.applistacompras.Model.Lista;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListaDAO {
 
 
@@ -23,6 +28,33 @@ public class ListaDAO {
 
         int idMax = c.getInt(0);
         return idMax;
+    }
+
+
+    public static List<Lista> listar(Context contexto) {
+        String sql = " SELECT * FROM lista " +
+                " ORDER BY data desc";
+        Conexao conn = new Conexao(contexto);
+        Cursor tabela = conn.consulta(sql);
+
+        List<Lista> listaDeItens = new ArrayList<>();
+
+        if (tabela.getCount() > 0) {
+            tabela.moveToFirst();
+
+            do {
+                Lista item = new Lista();
+                item.setId(tabela.getInt(0));
+                item.setData(tabela.getString(1));
+
+
+                listaDeItens.add(item);
+
+            } while (tabela.moveToNext());
+
+        }
+
+        return listaDeItens;
     }
 
     public static void excluir(int id, Context contexto) {

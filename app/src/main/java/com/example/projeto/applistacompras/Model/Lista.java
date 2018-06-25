@@ -6,7 +6,7 @@ import java.util.Date;
 public class Lista {
 
     private int id;
-    private Date data;
+    private String data;
     private ArrayList<Item> listaDeItens;
 
 
@@ -18,11 +18,11 @@ public class Lista {
         this.id = id;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
