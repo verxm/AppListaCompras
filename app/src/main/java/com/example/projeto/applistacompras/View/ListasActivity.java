@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
@@ -76,6 +78,15 @@ public class ListasActivity extends AppCompatActivity {
             }
         });
 
+        lvLista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Lista li = (Lista) lvLista.getItemAtPosition(i);
+                Intent intent = new Intent(ListasActivity.this, CompraActivity.class);
+                intent.putExtra("codLista", li.getId());
+                startActivity(intent);
+            }
+        });
 
     }
 

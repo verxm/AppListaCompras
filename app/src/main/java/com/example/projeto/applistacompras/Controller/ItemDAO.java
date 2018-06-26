@@ -70,5 +70,28 @@ public class ItemDAO {
         return listaDeItens;
     }
 
+    public static Item listarByCodLista(int codLista, Context contexto) {
+        String sql = " SELECT * FROM item " +
+                " WHERE codLista = " + codLista;
+        Conexao conn = new Conexao(contexto);
+        Cursor tabela = conn.consulta(sql);
+
+        if (tabela.getCount() == 0) {
+            return null;
+        } else {
+
+            Item item = new Item();
+            tabela.moveToFirst();
+
+
+            item.setId(tabela.getInt(0));
+            item.setNome(tabela.getString(1));
+            item.setQuantidade(tabela.getString(2));
+            item.setCodLista(tabela.getInt(3));
+
+            return item;
+        }
+
+    }
 
 }

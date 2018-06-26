@@ -22,7 +22,8 @@
         <activity
             android:name=".View.NovaListaActivity"
             android:label="@string/title_activity_nova_lista"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".View.CompraActivity"></activity>
     </application>
 
 </manifest>
