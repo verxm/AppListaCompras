@@ -16,25 +16,25 @@ import java.util.List;
 public class CompraActivity extends AppCompatActivity {
 
     private ListView lvCompra;
-    private List<Item> itemList;
-    private Item itens;
+    private List<Item> lista;
+    private Item item;
     private int idLista;
-    private Context contexto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compra);
 
+        idLista = getIntent().getExtras().getInt("codLista");
         lvCompra = (ListView) findViewById(R.id.lvCompra);
+        lista = new ArrayList<>();
+
         carregarItens();
     }
 
     private void carregarItens() {
-        int codLista = getIntent().getExtras().getInt("codLista");
-        itens = ItemDAO.listarByCodLista(codLista,this);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, itemList);
+        item = ItemDAO.listarByCodLista(idLista, this);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lista);
         lvCompra.setAdapter(adapter);
     }
 }
