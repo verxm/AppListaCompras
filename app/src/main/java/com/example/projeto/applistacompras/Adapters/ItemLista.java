@@ -47,7 +47,7 @@ public class ItemLista extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ItemSuporte suporte;
 
         final Item item = listaItens.get(i);
@@ -63,11 +63,14 @@ public class ItemLista extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     ItemDAO.excluir(item.getId(), contexto);
+                    listaItens.remove(i);
                     notifyDataSetChanged();
+
                     Toast.makeText(contexto, "Item Excluído!", Toast.LENGTH_SHORT).show();
                 }
             });
             view.setTag(suporte);
+
         } else {
             suporte = (ItemSuporte) view.getTag();
         }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -58,7 +59,7 @@ public class NovaListaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(NovaListaActivity.this, ListasActivity.class);
-                Toast.makeText(NovaListaActivity.this ,"Lista Adicionada!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NovaListaActivity.this, "Lista Adicionada!", Toast.LENGTH_SHORT).show();
                 startActivity(i);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -90,9 +91,18 @@ public class NovaListaActivity extends AppCompatActivity {
         item.setNome(etItem.getText().toString());
         item.setQuantidade(etQuantidade.getText().toString());
         item.setCodLista(idLista);
-        ItemDAO.inserir(item, this);
-        limpar();
-        carregarItens();
+        if (etItem.getText().toString().equals("")) {
+            AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+            alerta.setTitle("Atenção!!!");
+            alerta.setIcon(android.R.drawable.ic_dialog_alert);
+            alerta.setMessage("Você não informou o ITEM!");
+            alerta.setNeutralButton("OK", null);
+            alerta.show();
+        } else {
+            ItemDAO.inserir(item, this);
+            limpar();
+            carregarItens();
+        }
     }
 
 }

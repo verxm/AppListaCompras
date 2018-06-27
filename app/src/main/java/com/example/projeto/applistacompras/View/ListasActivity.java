@@ -4,34 +4,26 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton; 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.projeto.applistacompras.Adapters.ItemLista;
-import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Controller.ListaDAO;
 import com.example.projeto.applistacompras.Model.Lista;
 import com.example.projeto.applistacompras.R;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class ListasActivity extends AppCompatActivity {
 
-    private Context contexto;
     private ListView lvLista;
     private List<Lista> lLista;
 
@@ -52,29 +44,30 @@ public class ListasActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListasActivity.this);
                 alerta.setTitle("Quando as compras serão realizadas?");
-                DatePicker calendario = new DatePicker(ListasActivity.this);
+                final DatePicker calendario = new DatePicker(ListasActivity.this);
                 alerta.setView(calendario);
 
-                int ano = calendario.getYear();
-                int mes = calendario.getMonth();
-                int dia = calendario.getDayOfMonth();
-
-                final String data = dia + "/" + mes + "/" + ano;
 
                 alerta.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        ListaDAO.criarLista(data, ListasActivity.this);
+
                         int idLista = ListaDAO.buscarMaiorIDdaLista(ListasActivity.this);
+
+                        int ano = calendario.getYear();
+                        int mes = calendario.getMonth();
+                        int dia = calendario.getDayOfMonth();
+
+                        final String data = ano + "/" + (mes + 1) + "/" + dia;
+
+                        ListaDAO.criarLista(data, ListasActivity.this);
                         Intent intent = new Intent(ListasActivity.this, NovaListaActivity.class);
                         intent.putExtra("data", data);
                         intent.putExtra("idLista", idLista);
-                        Log.i("lista", "id: "+ idLista);
                         startActivity(intent);
                     }
                 });
                 alerta.show();
-
             }
         });
 
@@ -90,7 +83,7 @@ public class ListasActivity extends AppCompatActivity {
 
     }
 
-        private void carregarListaComprasPendentes(){
+    private void carregarListas() {
         lLista = ListaDAO.listar(this);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lLista);
         lvLista.setAdapter(adapter);
@@ -98,14 +91,14 @@ public class ListasActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        carregarListaComprasPendentes();
+        carregarListas();
         super.onStart();
     }
 
     @Override
-        protected void onRestart() {
-            super.onRestart();
-            carregarListaComprasPendentes();
+    protected void onRestart() {
+        super.onRestart();
+
     }
 
     @Override
@@ -113,7 +106,7 @@ public class ListasActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_listas, menu);
         return true;
-}
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

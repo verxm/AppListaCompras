@@ -33,7 +33,7 @@ public class CompraActivity extends AppCompatActivity {
     }
 
     private void carregarItens() {
-        item = ItemDAO.listarByCodLista(idLista, this);
+        lista = ItemDAO.listar(idLista, this);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lista);
         lvCompra.setAdapter(adapter);
     }
