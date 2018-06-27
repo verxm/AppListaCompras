@@ -47,20 +47,19 @@ public class ListasActivity extends AppCompatActivity {
                 final DatePicker calendario = new DatePicker(ListasActivity.this);
                 alerta.setView(calendario);
 
-
                 alerta.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
-                        int idLista = ListaDAO.buscarMaiorIDdaLista(ListasActivity.this);
 
                         int ano = calendario.getYear();
                         int mes = calendario.getMonth();
                         int dia = calendario.getDayOfMonth();
 
-                        final String data = ano + "/" + (mes + 1) + "/" + dia;
+                        final String data = dia + "/" + (mes +1) + "/" + ano;
 
                         ListaDAO.criarLista(data, ListasActivity.this);
+                        int idLista = ListaDAO.buscarMaiorIDdaLista(ListasActivity.this);
+
                         Intent intent = new Intent(ListasActivity.this, NovaListaActivity.class);
                         intent.putExtra("data", data);
                         intent.putExtra("idLista", idLista);
@@ -82,8 +81,7 @@ public class ListasActivity extends AppCompatActivity {
         });
 
     }
-
-    private void carregarListas() {
+        private void carregarListas(){
         lLista = ListaDAO.listar(this);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lLista);
         lvLista.setAdapter(adapter);
@@ -96,9 +94,9 @@ public class ListasActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-
+        protected void onRestart() {
+            super.onRestart();
+            carregarListas();
     }
 
     @Override
@@ -106,7 +104,7 @@ public class ListasActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_listas, menu);
         return true;
-    }
+}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -75,7 +75,7 @@ public class ItemLista extends BaseAdapter {
             suporte = (ItemSuporte) view.getTag();
         }
 
-        suporte.etNome.setText("ITEM: " +item.getNome());
+        suporte.etNome.setText("ITEM: " + item.getNome());
         suporte.etQuantidade.setText("Quantidade: " + item.getQuantidade());
 
         if (i % 2 == 0) {

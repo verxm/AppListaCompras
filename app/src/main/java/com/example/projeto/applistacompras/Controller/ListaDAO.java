@@ -11,7 +11,7 @@ import java.util.List;
 public class ListaDAO {
 
 
-    public static boolean criarLista(String data, Context contexto){
+    public static boolean criarLista(String data, Context contexto) {
         String sql = "INSERT INTO lista (data) VALUES ( '" + data + "' )";
 
         Conexao conn = new Conexao(contexto);
@@ -19,7 +19,7 @@ public class ListaDAO {
         return true;
     }
 
-    public static int buscarMaiorIDdaLista(Context contexto){
+    public static int buscarMaiorIDdaLista(Context contexto) {
         String sql = "SELECT MAX(ID) FROM lista";
 
         Conexao conn = new Conexao(contexto);
