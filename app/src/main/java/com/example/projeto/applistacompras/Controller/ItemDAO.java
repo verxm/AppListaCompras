@@ -92,6 +92,37 @@ public class ItemDAO {
             return item;
         }
 
+
     }
+
+
+
+
+    public static boolean listaVazia(Context contexto, int codLista){
+
+        boolean vazia;
+
+        String sql = "SELECT * FROM item WHERE codLista = " + codLista;
+
+        Conexao conn = new Conexao(contexto);
+        Cursor itens = conn.consulta(sql);
+
+        if (itens.getCount() == 0){
+            vazia = true;
+        }else {
+            vazia = false;
+        }
+
+        return vazia;
+
+
+    }
+
+
+
+
+
+
+
 
 }
