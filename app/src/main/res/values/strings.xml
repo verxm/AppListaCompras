@@ -5,4 +5,7 @@
     <string name="informeOsItens">Informe os Itens</string>
     <string name="quantidade">Quantidade?</string>
     <string name="title_activity_nova_lista">NovaListaActivity</string>
+    <string name="title_activity_compras_ideia">ComprasIdeiaActivity</string>
+
+    <string name="subTotal">SubTotal:</string>
 </resources>

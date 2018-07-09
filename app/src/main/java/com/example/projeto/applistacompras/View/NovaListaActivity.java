@@ -33,6 +33,13 @@ public class NovaListaActivity extends AppCompatActivity {
     private List<Item> lista;
     private int idLista;
 
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +93,7 @@ public class NovaListaActivity extends AppCompatActivity {
                     alerta.show();
                 }else{
                     Intent i = new Intent(NovaListaActivity.this, ListasActivity.class);
-                    Toast.makeText(NovaListaActivity.this, "Lista Adicionada!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NovaListaActivity.this, "Lista Adicionada", Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }
 
@@ -95,6 +102,28 @@ public class NovaListaActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected void onDestroy() {
@@ -114,7 +143,6 @@ public class NovaListaActivity extends AppCompatActivity {
     }
 
     private void adicionar() {
-
 
         if (item == null)
             item = new Item();
