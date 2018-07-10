@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Ideia.ComprasIdeiaActivity"
+    tools:showIn="@layout/activity_compras_ideia"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="06/07/2018"
+            style="@style/labels"
+            android:layout_marginTop="8sp"
+            android:layout_marginLeft="20sp"
+            android:id="@+id/tvData"
+            android:visibility="visible"
+            />
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/llIniciarCompraSuperior"
+            android:visibility="gone">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subTotal"
+            style="@style/labels"
+            android:visibility="visible"
+            android:layout_marginTop="8sp"
+            android:layout_marginLeft="170sp"
+            android:id="@+id/tvSubTotal"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R$00.00"
+            style="@style/labels"
+            android:layout_marginTop="8sp"
+            android:layout_marginLeft="10sp"
+            android:id="@+id/tvValorSubTotal"/>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="06/07/2000"
+            android:layout_marginLeft="20sp"
+            android:id="@+id/etData"
+            android:visibility="gone"/>
+
+
+
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#000"
+        android:layout_marginTop="7sp">
+
+    </LinearLayout>
+
+
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="0sp"
+        android:layout_weight="1"
+        android:id="@+id/lvComprasIdeia">
+    </ListView>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Iniciar Compra"
+        android:id="@+id/btnIniciarCompra"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
