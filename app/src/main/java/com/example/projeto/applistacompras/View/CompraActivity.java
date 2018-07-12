@@ -2,10 +2,14 @@ package com.example.projeto.applistacompras.View;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,7 +27,6 @@ public class CompraActivity extends AppCompatActivity {
 
     private ListView lvCompra;
     private List<Item> lista;
-    private Item item;
     private int idLista;
 
     private Button btnScan;
@@ -61,7 +64,15 @@ public class CompraActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() != null) {
-                alert(result.getContents());
+                AlertDialog.Builder alerta = new AlertDialog.Builder(CompraActivity.this);
+                alerta.setMessage(result.getContents());
+                alerta.show();
+                String barcode = result.getContents();
+                String[] resp = barcode.split("|");
+
+                String produto = resp[0].substring(0, 10);
+                String preco = resp[1].substring(12,19);
+                Log.i("meia", "Produto" + produto);
             } else {
                 alert("Scan cancelado");
             }
@@ -69,6 +80,7 @@ public class CompraActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
 
     private void alert(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
@@ -78,5 +90,13 @@ public class CompraActivity extends AppCompatActivity {
         lista = ItemDAO.listar(idLista, this);
         ListaCompras adapter = new ListaCompras(this, lista);
         lvCompra.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(getResources().getString(R.string.excluirItem));
+        menu.add(getResources().getString(R.string.excluirLista));
+        menu.add(getResources().getString(R.string.selecionar));
+        return super.onCreateOptionsMenu(menu);
     }
 }
