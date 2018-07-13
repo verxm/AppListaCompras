@@ -1,12 +1,9 @@
 package com.example.projeto.applistacompras.Controller;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 
 import com.example.projeto.applistacompras.Model.Item;
-import com.example.projeto.applistacompras.View.NovaListaActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,35 +67,8 @@ public class ItemDAO {
         return listaDeItens;
     }
 
-    public static Item listarByCodLista(int codLista, Context contexto) {
-        String sql = " SELECT * FROM item " +
-                " WHERE codLista = " + codLista;
-        Conexao conn = new Conexao(contexto);
-        Cursor tabela = conn.consulta(sql);
 
-        if (tabela.getCount() == 0) {
-            return null;
-        } else {
-
-            Item item = new Item();
-            tabela.moveToFirst();
-
-
-            item.setId(tabela.getInt(0));
-            item.setNome(tabela.getString(1));
-            item.setQuantidade(tabela.getString(2));
-            item.setCodLista(tabela.getInt(3));
-
-            return item;
-        }
-
-
-    }
-
-
-
-
-    public static boolean listaVazia(Context contexto, int codLista){
+    public static boolean listaVazia(Context contexto, int codLista) {
 
         boolean vazia;
 
@@ -107,9 +77,9 @@ public class ItemDAO {
         Conexao conn = new Conexao(contexto);
         Cursor itens = conn.consulta(sql);
 
-        if (itens.getCount() == 0){
+        if (itens.getCount() == 0) {
             vazia = true;
-        }else {
+        } else {
             vazia = false;
         }
 
@@ -117,12 +87,6 @@ public class ItemDAO {
 
 
     }
-
-
-
-
-
-
 
 
 }
