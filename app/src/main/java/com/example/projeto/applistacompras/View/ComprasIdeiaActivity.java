@@ -2,12 +2,14 @@ package com.example.projeto.applistacompras.View;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,21 +93,20 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         etData.setVisibility(View.GONE);
     }
 
-
-
-
-
-
-
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() != null) {
-                alert(result.getContents());
+                AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+                alerta.setMessage(result.getContents());
+                alerta.show();
+                String barcode = result.getContents();
+                String[] resp = barcode.split("|");
+
+                String produto = resp[0].substring(0, 10);
+                String preco = resp[1].substring(12,19);
+                Log.i("meia", "Produto" + produto);
             } else {
                 alert("Scan cancelado");
             }
@@ -115,14 +116,9 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     private void alert(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
-
 
 
     private void carregarItens() {
@@ -130,14 +126,6 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         ListaCompras adapter = new ListaCompras(this, lista);
         lvCompra.setAdapter(adapter);
     }
-
-
-
-
-
-
-
-
-
+    
 
 }
