@@ -89,11 +89,6 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         tvSubTotal.setVisibility(View.GONE);
         tvValorSubTotal.setVisibility(View.GONE);
         etData.setVisibility(View.GONE);
-
-
-
-
-
     }
 
 
