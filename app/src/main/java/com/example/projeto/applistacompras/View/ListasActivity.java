@@ -1,6 +1,5 @@
 package com.example.projeto.applistacompras.View;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -74,7 +73,7 @@ public class ListasActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Lista li = (Lista) lvLista.getItemAtPosition(i);
-                Intent intent = new Intent(ListasActivity.this, CompraActivity.class);
+                Intent intent = new Intent(ListasActivity.this, ComprasIdeiaActivity.class);
                 intent.putExtra("codLista", li.getId());
                 startActivity(intent);
             }

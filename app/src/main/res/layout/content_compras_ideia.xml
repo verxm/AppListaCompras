@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Ideia.ComprasIdeiaActivity"
+    tools:context=".View.ComprasIdeiaActivity"
     tools:showIn="@layout/activity_compras_ideia"
     android:orientation="vertical">
 
@@ -98,7 +98,7 @@
 
 
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0sp"
         android:layout_weight="1"
         android:id="@+id/lvComprasIdeia">

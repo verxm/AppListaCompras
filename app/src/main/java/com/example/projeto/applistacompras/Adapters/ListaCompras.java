@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,10 +52,11 @@ public class ListaCompras extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.layout_lista_compras, null);
             suporte = new ItemSuporte();
-            suporte.etNome = view.findViewById(R.id.cnlItem);
-            suporte.etQuantidade = view.findViewById(R.id.cnlQuantidade);
-            suporte.ckConfirmado = view.findViewById(R.id.ckConfirmado);
-            suporte.layout = view.findViewById(R.id.lcLayout);
+            suporte.tvNome = view.findViewById(R.id.llcItem);
+            suporte.btnExcluir = view.findViewById(R.id.llcBtnExcluir);
+            suporte.tvPreco = view.findViewById(R.id.llctvPrecoItem);
+            suporte.tvQuantidade = view.findViewById(R.id.llcQuantidade);
+            suporte.layout = view.findViewById(R.id.llcLayout);
 
             view.setTag(suporte);
 
@@ -62,8 +64,8 @@ public class ListaCompras extends BaseAdapter {
             suporte = (ListaCompras.ItemSuporte) view.getTag();
         }
 
-        suporte.etNome.setText(item.getNome());
-        suporte.etQuantidade.setText(item.getQuantidade());
+        suporte.tvNome.setText(item.getNome());
+        suporte.tvQuantidade.setText(item.getQuantidade());
 
         if (i % 2 == 0) {
             suporte.layout.setBackgroundColor(Color.WHITE);
@@ -75,8 +77,9 @@ public class ListaCompras extends BaseAdapter {
     }
 
     private class ItemSuporte {
-        TextView etNome, etQuantidade;
-        CheckBox ckConfirmado;
+        TextView tvNome, tvQuantidade;
+        Button btnExcluir;
+        TextView tvPreco;
         LinearLayout layout;
     }
 }
