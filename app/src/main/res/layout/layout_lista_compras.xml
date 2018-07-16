@@ -1,38 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lcLayout"
+    android:id="@+id/llcLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="5sp">
 
     <LinearLayout
-        android:id="@+id/lvItens"
         android:layout_width="0sp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/cnlItem"
-            android:layout_width="wrap_content"
+            android:id="@+id/llcItem"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ITEM:"
-            android:textSize="20sp" />
+            style="@style/labels"/>
 
         <TextView
-            android:id="@+id/cnlQuantidade"
-            android:layout_width="wrap_content"
+            android:id="@+id/llcQuantidade"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Quantidade:"
-            android:textSize="15sp" />
+            style="@style/labels"/>
 
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/ckConfirmado"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center_vertical"/>
+
+    <LinearLayout
+        android:layout_width="0sp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$0,00"
+                android:layout_marginTop="10sp"
+                android:layout_marginRight="20sp"
+                style="@style/labels"
+                android:id="@+id/llctvPrecoItem"
+                android:visibility="visible"
+                />
+
+            <Button
+                android:id="@+id/llcBtnExcluir"
+                android:layout_width="52dp"
+                android:layout_height="50sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="28sp"
+                android:background="@android:drawable/ic_menu_delete"
+                android:backgroundTint="@color/colorAccent" />
+
+
+        </FrameLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

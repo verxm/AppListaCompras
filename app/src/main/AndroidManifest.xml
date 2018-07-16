@@ -23,9 +23,8 @@
             android:name=".View.NovaListaActivity"
             android:label="@string/title_activity_nova_lista"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View.CompraActivity" />
         <activity
-            android:name=".Ideia.ComprasIdeiaActivity"
+            android:name=".View.ComprasIdeiaActivity"
             android:label="@string/title_activity_compras_ideia"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

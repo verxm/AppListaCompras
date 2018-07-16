@@ -2,6 +2,7 @@ package com.example.projeto.applistacompras.Controller;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.example.projeto.applistacompras.Model.Item;
 
@@ -48,6 +49,7 @@ public class ItemDAO {
 
         List<Item> listaDeItens = new ArrayList<>();
 
+        Log.i("item", "Cont: " + tabela.getCount());
         if (tabela.getCount() > 0) {
             tabela.moveToFirst();
 
@@ -57,6 +59,8 @@ public class ItemDAO {
                 item.setNome(tabela.getString(1));
                 item.setQuantidade(tabela.getString(2));
                 item.setCodLista(tabela.getInt(3));
+
+                Log.i("item", item.getNome());
 
                 listaDeItens.add(item);
 
