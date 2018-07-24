@@ -3,6 +3,7 @@ package com.example.projeto.applistacompras.Controller;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.example.projeto.applistacompras.Model.Item;
 import com.example.projeto.applistacompras.Model.Lista;
 
 import java.util.ArrayList;
@@ -68,6 +69,14 @@ public class ListaDAO {
 
 
 
+    public static void editar(String data, int idLista, Context contexto) {
+        String sql = "UPDATE lista SET " +
+                " data = '" + data + "' " +
+                " WHERE id = " + idLista;
+
+        Conexao conn = new Conexao(contexto);
+        conn.executar(sql);
+    }
 
 
 

@@ -47,7 +47,6 @@
                 android:layout_marginRight="20sp"
                 style="@style/labels"
                 android:id="@+id/llctvPrecoItem"
-                android:visibility="visible"
                 />
 
             <Button
