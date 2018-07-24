@@ -3,6 +3,7 @@ package com.example.projeto.applistacompras.View;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -300,7 +302,15 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() != null) {
-                alert(result.getContents());
+                AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+                alerta.setMessage(result.getContents());
+                alerta.show();
+                String barcode = result.getContents();
+                String[] resp = barcode.split("|");
+
+                String produto = resp[0].substring(0, 10);
+                String preco = resp[1].substring(12,19);
+                Log.i("meia", "Produto" + produto);
             } else {
                 alert("Scan cancelado");
             }
