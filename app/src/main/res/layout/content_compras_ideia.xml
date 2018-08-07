@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="06/07/2018"
+            android:hint="06/07/2000"
             style="@style/labels"
             android:layout_marginTop="8sp"
             android:layout_marginLeft="20sp"
@@ -39,32 +39,29 @@
             android:visibility="gone">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/subTotal"
-            style="@style/labels"
-            android:visibility="visible"
-            android:layout_marginTop="8sp"
-            android:layout_marginLeft="170sp"
-            android:id="@+id/tvSubTotal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/subTotal"
+                style="@style/labels"
+                android:visibility="visible"
+                android:layout_marginTop="8sp"
+                android:layout_marginLeft="170sp"
+                android:id="@+id/tvSubTotal"/>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="R$00.00"
-            style="@style/labels"
-            android:layout_marginTop="8sp"
-            android:layout_marginLeft="10sp"
-            android:id="@+id/tvValorSubTotal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$00.00"
+                style="@style/labels"
+                android:layout_marginTop="8sp"
+                android:layout_marginLeft="10sp"
+                android:id="@+id/tvValorSubTotal"
+                android:visibility="visible"/>
 
         </LinearLayout>
-
-
-
-
-
 
 
 
@@ -75,7 +72,10 @@
             android:hint="06/07/2000"
             android:layout_marginLeft="20sp"
             android:id="@+id/etData"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:drawableLeft="@android:drawable/ic_menu_edit"
+            android:inputType="date"
+            />
 
 
 
@@ -103,18 +103,29 @@
     </ListView>
 
 
-    <Button
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Iniciar Compra"
-        android:id="@+id/btnIniciarCompra"/>
+        android:layout_height="wrap_content">
+
+         <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/iniciarCompra"
+            android:id="@+id/btnIniciarCompra"/>
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/salvar"
-        android:id="@+id/btnSalvar"/>
+       <Button
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/salvar"
+           android:id="@+id/btnSalvar"
+           android:visibility="visible"/>
+
+
+
+    </FrameLayout>
+
 
 
 
