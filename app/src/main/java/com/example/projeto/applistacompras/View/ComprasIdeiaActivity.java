@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -32,6 +31,7 @@ import com.example.projeto.applistacompras.Adapters.ListaCompras;
 import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Controller.ListaDAO;
 import com.example.projeto.applistacompras.Model.Item;
+import com.example.projeto.applistacompras.Model.ItemQR;
 import com.example.projeto.applistacompras.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -50,6 +50,8 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     private TextView tvData, tvSubTotal, tvValorSubTotal;
     private EditText etData;
     private  String dataLista;
+    private LinearLayout llIniciarCompraSuperior;
+    private ItemQR itemQR;
 
 
 
@@ -74,6 +76,18 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         tvValorSubTotal = (TextView) findViewById(R.id.tvValorSubTotal);
         etData = (EditText) findViewById(R.id.etData);
         btnSalvar = (Button) findViewById(R.id.btnSalvar);
+        llIniciarCompraSuperior = (LinearLayout) findViewById(R.id.llIniciarCompraSuperior);
+        final FloatingActionButton fabCamera = (FloatingActionButton) findViewById(R.id.fabCamera);
+
+        // -------ELEMENTOS DE TELA QUE INICIAM INVISÌVEIS----------
+        fabCamera.setVisibility(View.GONE);
+        tvSubTotal.setVisibility(View.GONE);
+        tvValorSubTotal.setVisibility(View.GONE);
+        etData.setVisibility(View.GONE);
+        btnSalvar.setVisibility(View.GONE);
+        lvCompra.setEnabled(true);
+
+        //----------------------------------------------------------
 
         tvData.setText(dataLista);
         etData.setText(dataLista);
@@ -81,7 +95,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
         final Activity activity = this;
 
-        FloatingActionButton fabCamera = (FloatingActionButton) findViewById(R.id.fabCamera);
+        //-----------------ACAO DO fabCamera---------------------
         fabCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,19 +139,19 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 alerta.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (etItem.equals("")){
-                            alert("Informe o Item que deseja adicionar");
+                        if (etItem.getText().toString().equals("")){
+                            alert("Nenhum item adicionado!");
                         }else{
                             Item item = new Item();
                             item.setNome(etItem.getText().toString());
-                            if (etQuantidade.equals("")){
+                            if (etQuantidade.getText().toString().equals("")){
                                 item.setQuantidade("-x-");
                             }else{
                                 item.setQuantidade(etQuantidade.getText().toString());
                             }
                             item.setCodLista(idLista);
                             ItemDAO.inserir(item, ComprasIdeiaActivity.this);
-                            carregarItens();
+                            carregarItens(false, false);
 
                         }
                     }
@@ -163,16 +177,20 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         fabEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (fabEditar.getVisibility() == View.VISIBLE){
+                    lvCompra.setEnabled(true);
                     fabEditar.setVisibility(View.GONE);
                     fabAdicionar.setVisibility(View.VISIBLE);
                     btnSalvar.setVisibility(View.VISIBLE);
                     btnIniciarCompra.setVisibility(View.GONE);
                     etData.setVisibility(View.VISIBLE);
                     tvData.setVisibility(View.GONE);
-                    lvCompra.setEnabled(true);
 
-                    carregarItensEditar();
+                    carregarItens(false, false);
+
+
+
 
                 }
             }
@@ -196,15 +214,46 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                     fabEditar.setVisibility(View.VISIBLE);
                     tvData.setVisibility(View.VISIBLE);
 
-                    String dataLista = etData.getText().toString();
-                    ListaDAO.editar(dataLista, idLista, ComprasIdeiaActivity.this);
+
+                    lista = ItemDAO.listar(idLista, ComprasIdeiaActivity.this);
+                    if (lista.size() == 0){
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+                        alerta.setTitle("Esta lista esta vazia!");
+                        alerta.setMessage("Deseja salvar essa lista mesmo estando vazia?");
+                        alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String dataLista = etData.getText().toString();
+                                ListaDAO.editar(dataLista, idLista, ComprasIdeiaActivity.this);
+                            }
+                        });
+
+
+
+                        alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ListaDAO.excluir(idLista, ComprasIdeiaActivity.this);
+                                alert("Essa lista foi excluida!");
+                                Intent intent = new Intent(ComprasIdeiaActivity.this, ListasActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                        alerta.show();
+
+                    }else{
+                        String dataLista = etData.getText().toString();
+                        ListaDAO.editar(dataLista, idLista, ComprasIdeiaActivity.this);
+                        alert("Lista Editada");
+                        tvData.setText(dataLista);
+                    }
+
+
 
                     etData.setVisibility(View.GONE);
 
-                    lvCompra.setEnabled(false);
-
-                    alert("Lista Editada");
-                    carregarItens();
+                    carregarItens(false, false);
                 }
             }
         });
@@ -215,56 +264,80 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
         //-----------------------------------ACAO DO clickLvCompra---------------------------------------
-        lvCompra.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        lvCompra.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                final Item item = (Item) lvCompra.getItemAtPosition(i);
+//                int idItem = item.getId();
+//                String nomeItem = item.getNome();
+//                String quantidade = item.getQuantidade();
+//
+//                AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+//
+//                final EditText etItem = new EditText(ComprasIdeiaActivity.this);
+//                etItem.setHint("Informe o Item");
+//                etItem.setText(nomeItem);
+//
+//                final EditText etQuantidade = new EditText(ComprasIdeiaActivity.this);
+//                etQuantidade.setHint("Quantidade");
+//                etQuantidade.setInputType(InputType.TYPE_CLASS_NUMBER);
+//                etQuantidade.setText(quantidade);
+//
+//                final LinearLayout layout = new LinearLayout(ComprasIdeiaActivity.this);
+//                layout.addView(etItem);
+//                layout.addView(etQuantidade);
+//                layout.setOrientation(LinearLayout.VERTICAL);
+//
+//                alerta.setView(layout);
+//
+//                alerta.setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        if (etItem.equals("")){
+//                            alert("Informe o novo Item");
+//                        }else{
+//                            item.setNome(etItem.getText().toString());
+//                            if (etQuantidade.equals("")){
+//                                item.setQuantidade("-x-");
+//                            }else{
+//                                item.setQuantidade(etQuantidade.getText().toString());
+//                            }
+//                            item.setCodLista(idLista);
+//                            ItemDAO.editar(item, ComprasIdeiaActivity.this);
+//                            alert("Item Editado!");
+//                            carregarItens(false, true);
+//
+//                        }
+//                    }
+//
+//                });
+//                alerta.setNegativeButton("Cancelar", null);
+//                alerta.show();
+//
+//            }
+//        });
+
+
+
+
+
+
+
+
+
+        //-----------------------------------ACAO DO btnIniciarCompra---------------------------------------
+        btnIniciarCompra.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final Item item = (Item) lvCompra.getItemAtPosition(i);
-                int idItem = item.getId();
-                String nomeItem = item.getNome();
-                String quantidade = item.getQuantidade();
-
-                AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
-
-                final EditText etItem = new EditText(ComprasIdeiaActivity.this);
-                etItem.setHint("Informe o Item");
-                etItem.setText(nomeItem);
-
-                final EditText etQuantidade = new EditText(ComprasIdeiaActivity.this);
-                etQuantidade.setHint("Quantidade");
-                etQuantidade.setInputType(InputType.TYPE_CLASS_NUMBER);
-                etQuantidade.setText(quantidade);
-
-                final LinearLayout layout = new LinearLayout(ComprasIdeiaActivity.this);
-                layout.addView(etItem);
-                layout.addView(etQuantidade);
-                layout.setOrientation(LinearLayout.VERTICAL);
-
-                alerta.setView(layout);
-
-                alerta.setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (etItem.equals("")){
-                            alert("Informe o novo Item");
-                        }else{
-                            item.setNome(etItem.getText().toString());
-                            if (etQuantidade.equals("")){
-                                item.setQuantidade("-x-");
-                            }else{
-                                item.setQuantidade(etQuantidade.getText().toString());
-                            }
-                            item.setCodLista(idLista);
-                            ItemDAO.editar(item, ComprasIdeiaActivity.this);
-                            alert("Item Editado!");
-                            carregarItens();
-
-                        }
-                    }
-
-                });
-                alerta.setNegativeButton("Cancelar", null);
-                alerta.show();
-
+            public void onClick(View view) {
+                btnIniciarCompra.setVisibility(View.GONE);
+                fabEditar.setVisibility(View.GONE);
+                tvData.setVisibility(View.GONE);
+                tvSubTotal.setVisibility(View.VISIBLE);
+                tvValorSubTotal.setVisibility(View.VISIBLE);
+                fabCamera.setVisibility(View.VISIBLE);
+                llIniciarCompraSuperior.setVisibility(View.VISIBLE);
+                carregarItens(true, false);
             }
         });
 
@@ -273,19 +346,15 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
 
-        carregarItens();
 
 
 
-        // -------ELEMENTOS DE TELA QUE INICIAM INVISÌVEIS----------
-        fabCamera.setVisibility(View.GONE);
-        tvSubTotal.setVisibility(View.GONE);
-        tvValorSubTotal.setVisibility(View.GONE);
-        etData.setVisibility(View.GONE);
-        btnSalvar.setVisibility(View.GONE);
-        lvCompra.setEnabled(false);
 
-        //----------------------------------------------------------
+        carregarItens(false, false);
+
+
+
+
     }
 
 
@@ -296,21 +365,80 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
 
+    private boolean acheiItem(ItemQR itemQR){
+        boolean acheiItem = false;
+        for (int i = 0; i <= lvCompra.getCount(); i++){
+
+            Item item = (Item) lvCompra.getItemAtPosition(i);
+            final String nomeItemQR = itemQR.getNome();
+            final String precoItemQR = itemQR.getPreco();
+
+            if (item.getNome().toString().contains(nomeItemQR)){
+                item.setCheck(true);
+                ItemDAO.checkItem(item, ComprasIdeiaActivity.this);
+                acheiItem = true;
+                break;
+            }else {
+                acheiItem = false;
+            }
+
+        }
+        return acheiItem;
+    }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() != null) {
-                AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
-                alerta.setMessage(result.getContents());
-                alerta.show();
-                String barcode = result.getContents();
-                String[] resp = barcode.split("|");
+                String resultado = result.getContents().toString();
+                String itemGetByQR[] = resultado.split("&");
+                final String nomeItemQR = itemGetByQR[0];
+                final String precoItemQR = itemGetByQR[1];
+                String validadeItemQR = itemGetByQR[2];
 
-                String produto = resp[0].substring(0, 10);
-                String preco = resp[1].substring(12,19);
-                Log.i("meia", "Produto" + produto);
+                itemQR = new ItemQR();
+                itemQR.setNome(nomeItemQR);
+                itemQR.setPreco(precoItemQR);
+                itemQR.setValidade(validadeItemQR);
+
+                boolean acheiItem = acheiItem(itemQR);
+                if (!acheiItem){
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+                    alerta.setTitle("Item não encontrado!");
+                    alerta.setMessage("Deseja adicionar esse item à lista?");
+                    alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Item itemNovo = new Item();
+                            itemNovo.setNome(nomeItemQR);
+                            itemNovo.setCheck(true);
+                            itemNovo.setPreco(precoItemQR);
+                            itemNovo.setCodLista(idLista);
+                            ItemDAO.inserir(itemNovo, ComprasIdeiaActivity.this);
+                            alert("Item adicionado à lista!");
+
+                            carregarItens(false, false);
+                        }
+                    });
+                    alerta.setNegativeButton("Não", null);
+                    alerta.show();
+                }else{
+
+                    carregarItens(false, false);
+                }
+
+
+//                String textoTeste = "Nome: " + nomeItemQR + "; Quantidade: " + quantidadeItemQR + "; Unidade: " + unidadeItemQR + "; Preco: " + precoItemQR + "Validade: " + validadeItemQR;
+//                AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+//                alerta.setMessage(textoTeste);
+//                alerta.setPositiveButton("OK", null);
+//                alerta.show();
+
+
             } else {
                 alert("Scan cancelado");
             }
@@ -332,20 +460,22 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
 
+
     //IMPLEMENTAR OUTROS CARREGAR ITENS
-    private void carregarItens() {
+    private void carregarItens(boolean mostrarTvPreco, boolean mostrarBtnExcluir) {
         lista = ItemDAO.listar(idLista, this);
-        ListaCompras adapter = new ListaCompras(this, lista);
+        ListaCompras adapter = new ListaCompras(this, lista, mostrarTvPreco, mostrarBtnExcluir);
         lvCompra.setAdapter(adapter);
     }
 
 
 
-    private void carregarItensEditar(){
-        lista = ItemDAO.listar(idLista, this);
-        ListaCompras adapter = new ListaCompras(this, lista, false, true);
-        lvCompra.setAdapter(adapter);
-    }
+//    private void carregarItensEditar(){
+//        lista = ItemDAO.listar(idLista, this);
+//        ListaCompras adapter = new ListaCompras(this, lista, false, true);
+//        lvCompra.setAdapter(adapter);
+//
+//    }
 
 
 

@@ -109,6 +109,8 @@ public class NovaListaActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+
+
     public void carregarItens() {
         lista = ItemDAO.listar(idLista, this);
         ItemLista itemLista = new ItemLista(this, lista);

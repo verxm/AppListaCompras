@@ -39,32 +39,29 @@
             android:visibility="gone">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/subTotal"
-            style="@style/labels"
-            android:visibility="visible"
-            android:layout_marginTop="8sp"
-            android:layout_marginLeft="170sp"
-            android:id="@+id/tvSubTotal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/subTotal"
+                style="@style/labels"
+                android:visibility="visible"
+                android:layout_marginTop="8sp"
+                android:layout_marginLeft="170sp"
+                android:id="@+id/tvSubTotal"/>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="R$00.00"
-            style="@style/labels"
-            android:layout_marginTop="8sp"
-            android:layout_marginLeft="10sp"
-            android:id="@+id/tvValorSubTotal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$00.00"
+                style="@style/labels"
+                android:layout_marginTop="8sp"
+                android:layout_marginLeft="10sp"
+                android:id="@+id/tvValorSubTotal"
+                android:visibility="visible"/>
 
         </LinearLayout>
-
-
-
-
-
 
 
 

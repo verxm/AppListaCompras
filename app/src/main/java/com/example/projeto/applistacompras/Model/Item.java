@@ -5,6 +5,8 @@ public class Item {
     private String quantidade;
     private String nome;
     private boolean check;
+    private String preco;
+
 
 
     @Override
@@ -50,5 +52,13 @@ public class Item {
 
     public void setCheck(boolean check) {
         this.check = check;
+    }
+
+    public String getPreco() {
+        return preco;
+    }
+
+    public void setPreco(String preco) {
+        this.preco = preco;
     }
 }

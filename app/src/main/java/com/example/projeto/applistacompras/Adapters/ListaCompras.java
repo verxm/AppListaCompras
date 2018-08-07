@@ -118,10 +118,14 @@ public class ListaCompras extends BaseAdapter {
         suporte.tvNome.setText(item.getNome());
         suporte.tvQuantidade.setText(item.getQuantidade());
 
-        if (i % 2 == 0) {
-            suporte.layout.setBackgroundColor(Color.WHITE);
-        } else {
-            suporte.layout.setBackgroundColor(Color.rgb(230, 230, 230));
+//        if (i % 2 == 0) {
+//            suporte.layout.setBackgroundColor(Color.WHITE);
+//        } else {
+//            suporte.layout.setBackgroundColor(Color.rgb(230, 230, 230));
+//        }
+
+        if (item.isCheck()){
+            suporte.layout.setBackgroundColor(Color.rgb(0, 200, 0));
         }
 
 
@@ -137,8 +141,8 @@ public class ListaCompras extends BaseAdapter {
 
     private class ItemSuporte {
         TextView tvNome, tvQuantidade;
-        public Button btnExcluir;
-        public TextView tvPreco;
+        Button btnExcluir;
+        TextView tvPreco;
         LinearLayout layout;
     }
 }
