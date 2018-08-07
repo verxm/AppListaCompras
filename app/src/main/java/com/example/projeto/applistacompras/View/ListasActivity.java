@@ -72,7 +72,9 @@ public class ListasActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Lista li = (Lista) lvLista.getItemAtPosition(i);
+                String dataLista = li.getData();
                 Intent intent = new Intent(ListasActivity.this, ComprasIdeiaActivity.class);
+                intent.putExtra("dataLista", dataLista);
                 intent.putExtra("codLista", li.getId());
                 startActivity(intent);
             }

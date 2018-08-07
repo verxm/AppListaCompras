@@ -11,6 +11,14 @@ import java.util.List;
 
 public class ItemDAO {
 
+
+    public static void checkItem(Item item, Context contexto){
+        String sql ="UPDATE item SET check = " + item.isCheck() + "WHERE id = " + item.getId();
+
+        Conexao conn = new Conexao(contexto);
+        conn.executar(sql);
+    }
+
     public static void editar(Item p, Context contexto) {
         String sql = "UPDATE item SET " +
                 " nome = '" + p.getNome() + "', " +
