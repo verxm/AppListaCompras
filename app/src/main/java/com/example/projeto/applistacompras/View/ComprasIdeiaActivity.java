@@ -113,6 +113,8 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
 
+
+
         //-----------------------------------ACAO DO fabAdicionar---------------------------------------
         final FloatingActionButton fabAdicionar = (FloatingActionButton) findViewById(R.id.fabAdicionar);
         fabAdicionar.setOnClickListener(new View.OnClickListener() {
