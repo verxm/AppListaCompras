@@ -32,7 +32,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="right|top"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@drawable/ic_lapis_buttom" /> <!-- teste -->
 
 
     <android.support.design.widget.FloatingActionButton

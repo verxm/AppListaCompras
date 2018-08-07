@@ -75,7 +75,9 @@
             android:hint="06/07/2000"
             android:layout_marginLeft="20sp"
             android:id="@+id/etData"
-            android:visibility="gone"/>
+            android:drawableLeft="@drawable/ic_lapis"
+            android:visibility="gone"
+            /> <!-- teste - linha android:drawableLeft" -->
 
 
 

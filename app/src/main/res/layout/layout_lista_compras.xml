@@ -57,7 +57,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="28sp"
                 android:background="@android:drawable/ic_menu_delete"
-                android:backgroundTint="@color/colorAccent" />
+                android:backgroundTint="@android:color/holo_red_dark" />
 
 
         </FrameLayout>
