@@ -124,12 +124,14 @@ public class NovaListaActivity extends AppCompatActivity {
 
     private void adicionar() {
 
-        if (item == null)
+        if (item == null) {
             item = new Item();
+        }
 
         item.setNome(etItem.getText().toString());
         item.setQuantidade(etQuantidade.getText().toString());
         item.setCodLista(idLista);
+        item.setCheck(0);
         ItemDAO.inserir(item, this);
 
     }

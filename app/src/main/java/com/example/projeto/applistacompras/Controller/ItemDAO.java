@@ -13,7 +13,13 @@ public class ItemDAO {
 
 
     public static void checkItem(Item item, Context contexto){
-        String sql ="UPDATE item SET check = " + item.isCheck() + "WHERE id = " + item.getId();
+        int verdadeiroOUfalso = 0;
+        if (item.getCheck() == 1){
+            verdadeiroOUfalso = 1;
+        }else{
+            verdadeiroOUfalso = 0;
+        }
+        String sql ="UPDATE item SET checked = " + verdadeiroOUfalso + " WHERE id = " + item.getId();
 
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
@@ -58,6 +64,9 @@ public class ItemDAO {
         List<Item> listaDeItens = new ArrayList<>();
 
         Log.i("item", "Cont: " + tabela.getCount());
+
+
+        List<Item> listaItensChecados = new ArrayList<>();
         if (tabela.getCount() > 0) {
             tabela.moveToFirst();
 
@@ -67,14 +76,25 @@ public class ItemDAO {
                 item.setNome(tabela.getString(1));
                 item.setQuantidade(tabela.getString(2));
                 item.setCodLista(tabela.getInt(3));
+                item.setCheck(tabela.getInt(4));
 
-                Log.i("item", item.getNome());
 
-                listaDeItens.add(item);
+                if (item.getCheck() == 1){
+                    listaItensChecados.add(item);
+                }else{
+                    listaDeItens.add(item);
+                }
 
             } while (tabela.moveToNext());
 
         }
+
+        for (int i = 0; i < listaItensChecados.size(); i++){
+            Item item = listaItensChecados.get(i);
+            listaDeItens.add(item);
+
+        }
+
 
         return listaDeItens;
     }

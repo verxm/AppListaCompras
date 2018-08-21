@@ -4,7 +4,7 @@ public class Item {
     private int id, codLista;
     private String quantidade;
     private String nome;
-    private boolean check;
+    private int check;
     private String preco;
 
 
@@ -46,11 +46,11 @@ public class Item {
         this.nome = nome;
     }
 
-    public boolean isCheck() {
+    public int getCheck() {
         return check;
     }
 
-    public void setCheck(boolean check) {
+    public void setCheck(int check) {
         this.check = check;
     }
 

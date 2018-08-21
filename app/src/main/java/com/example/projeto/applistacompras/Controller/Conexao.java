@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Conexao extends SQLiteOpenHelper {
 
     private static final String NOME = "listaDeCompras";
-    private static final int VERSAO = 2;
+    private static final int VERSAO = 4;
 
     public Conexao(Context contexto) {
         super(contexto, NOME, null, VERSAO);
@@ -35,12 +35,13 @@ public class Conexao extends SQLiteOpenHelper {
                 " id INTEGER NOT NULL PRIMARY KEY ," +
                 " nome TEXT NOT NULL , " +
                 " quantidade TEXT , " +
-                " codLista INTEGER NOT NULL)");
+                " codLista INTEGER NOT NULL, " +
+                " checked INTEGER DEFAULT 0)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i == 1) {
+        if (i <= 3) {
             sqLiteDatabase.execSQL("DROP TABLE item");
             onCreate(sqLiteDatabase);
         }

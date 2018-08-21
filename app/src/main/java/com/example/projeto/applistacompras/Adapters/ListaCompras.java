@@ -124,7 +124,7 @@ public class ListaCompras extends BaseAdapter {
 //            suporte.layout.setBackgroundColor(Color.rgb(230, 230, 230));
 //        }
 
-        if (item.isCheck()){
+        if (item.getCheck() == 1){
             suporte.layout.setBackgroundColor(Color.rgb(0, 200, 0));
         }
 

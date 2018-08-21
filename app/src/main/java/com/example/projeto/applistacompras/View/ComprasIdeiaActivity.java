@@ -115,7 +115,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
 
-        //-----------------------------------ACAO DO fabAdicionar---------------------------------------
+        //-----------------------------------------------ACAO DO fabAdicionar-----------------------------------------------------------
         final FloatingActionButton fabAdicionar = (FloatingActionButton) findViewById(R.id.fabAdicionar);
         fabAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,13 +169,13 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
             }
         });
+        //-----------------------------------------------------------XXX---------------------------------------------------------------------
 
 
 
 
 
-
-        //-----------------------------------ACAO DO fabEditar---------------------------------------
+        //-----------------------------------------------------ACAO DO fabEditar-----------------------------------------------------------
         fabEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,6 +197,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 }
             }
         });
+        //-----------------------------------------------------------XXX---------------------------------------------------------------------
 
 
 
@@ -205,7 +206,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
 
-        //-----------------------------------ACAO DO btnSalvar---------------------------------------
+        //-------------------------------------------------------ACAO DO btnSalvar---------------------------------------------------------
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -259,66 +260,70 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 }
             }
         });
+        //-------------------------------------------------------XXX-----------------------------------------------------------------------
 
 
 
 
 
 
-        //-----------------------------------ACAO DO clickLvCompra---------------------------------------
-//        lvCompra.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                final Item item = (Item) lvCompra.getItemAtPosition(i);
-//                int idItem = item.getId();
-//                String nomeItem = item.getNome();
-//                String quantidade = item.getQuantidade();
-//
-//                AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
-//
-//                final EditText etItem = new EditText(ComprasIdeiaActivity.this);
-//                etItem.setHint("Informe o Item");
-//                etItem.setText(nomeItem);
-//
-//                final EditText etQuantidade = new EditText(ComprasIdeiaActivity.this);
-//                etQuantidade.setHint("Quantidade");
-//                etQuantidade.setInputType(InputType.TYPE_CLASS_NUMBER);
-//                etQuantidade.setText(quantidade);
-//
-//                final LinearLayout layout = new LinearLayout(ComprasIdeiaActivity.this);
-//                layout.addView(etItem);
-//                layout.addView(etQuantidade);
-//                layout.setOrientation(LinearLayout.VERTICAL);
-//
-//                alerta.setView(layout);
-//
-//                alerta.setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        if (etItem.equals("")){
-//                            alert("Informe o novo Item");
-//                        }else{
-//                            item.setNome(etItem.getText().toString());
-//                            if (etQuantidade.equals("")){
-//                                item.setQuantidade("-x-");
-//                            }else{
-//                                item.setQuantidade(etQuantidade.getText().toString());
-//                            }
-//                            item.setCodLista(idLista);
-//                            ItemDAO.editar(item, ComprasIdeiaActivity.this);
-//                            alert("Item Editado!");
-//                            carregarItens(false, true);
-//
-//                        }
-//                    }
-//
-//                });
-//                alerta.setNegativeButton("Cancelar", null);
-//                alerta.show();
-//
-//            }
-//        });
+        //-------------------------------------------------ACAO DO clickLvCompra---------------------------------------------------------
+        lvCompra.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (fabAdicionar.getVisibility() == View.VISIBLE) {
+                    final Item item = (Item) lvCompra.getItemAtPosition(i);
+                    int idItem = item.getId();
+                    String nomeItem = item.getNome();
+                    String quantidade = item.getQuantidade();
+
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+
+                    final EditText etItem = new EditText(ComprasIdeiaActivity.this);
+                    etItem.setHint("Informe o Item");
+                    etItem.setText(nomeItem);
+
+                    final EditText etQuantidade = new EditText(ComprasIdeiaActivity.this);
+                    etQuantidade.setHint("Quantidade");
+                    etQuantidade.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    etQuantidade.setText(quantidade);
+
+                    final LinearLayout layout = new LinearLayout(ComprasIdeiaActivity.this);
+                    layout.addView(etItem);
+                    layout.addView(etQuantidade);
+                    layout.setOrientation(LinearLayout.VERTICAL);
+
+                    alerta.setView(layout);
+
+                    alerta.setPositiveButton("EDITAR", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (etItem.equals("")) {
+                                alert("Informe o novo Item");
+                            } else {
+                                item.setNome(etItem.getText().toString());
+                                if (etQuantidade.equals("")) {
+                                    item.setQuantidade("-x-");
+                                } else {
+                                    item.setQuantidade(etQuantidade.getText().toString());
+                                }
+                                item.setCodLista(idLista);
+                                ItemDAO.editar(item, ComprasIdeiaActivity.this);
+                                alert("Item Editado!");
+                                carregarItens(false, false);
+
+                            }
+                        }
+
+                    });
+                    alerta.setNegativeButton("Cancelar", null);
+                    alerta.show();
+
+                }
+            }
+        });
+        //-------------------------------------------------------XXX-----------------------------------------------------------------------
 
 
 
@@ -328,7 +333,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
 
-        //-----------------------------------ACAO DO btnIniciarCompra---------------------------------------
+        //-----------------------------------------------ACAO DO btnIniciarCompra------------------------------------------------------------
         btnIniciarCompra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -342,12 +347,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 carregarItens(true, false);
             }
         });
-
-
-
-
-
-
+        //----------------------------------------------------------XXX-----------------------------------------------------------------------
 
 
 
@@ -357,36 +357,13 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
 
-    }
+    }//-----------------------------------------------------FIM onCreate--------------------------------------------------------------------
 
 
 
 
 
 
-
-
-
-    private boolean acheiItem(ItemQR itemQR){
-        boolean acheiItem = false;
-        for (int i = 0; i <= lvCompra.getCount(); i++){
-
-            Item item = (Item) lvCompra.getItemAtPosition(i);
-            final String nomeItemQR = itemQR.getNome();
-            final String precoItemQR = itemQR.getPreco();
-
-            if (item.getNome().toString().contains(nomeItemQR)){
-                item.setCheck(true);
-                ItemDAO.checkItem(item, ComprasIdeiaActivity.this);
-                acheiItem = true;
-                break;
-            }else {
-                acheiItem = false;
-            }
-
-        }
-        return acheiItem;
-    }
 
 
 
@@ -407,20 +384,25 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 itemQR.setPreco(precoItemQR);
                 itemQR.setValidade(validadeItemQR);
 
+
                 boolean acheiItem = acheiItem(itemQR);
                 if (!acheiItem){
                     AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
                     alerta.setTitle("Item não encontrado!");
-                    alerta.setMessage("Deseja adicionar esse item à lista?");
+                    alerta.setMessage("Deseja adicionar o " + nomeItemQR + " à lista?");
                     alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+
+                        //TERMINAR ESSAS LINHAS, NAO TA DANDO CHECK ASSIM QUE ADICIONA A LISTA
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Item itemNovo = new Item();
                             itemNovo.setNome(nomeItemQR);
-                            itemNovo.setCheck(true);
+                            itemNovo.setCheck(1);
                             itemNovo.setPreco(precoItemQR);
+                            itemNovo.setQuantidade("1");
                             itemNovo.setCodLista(idLista);
                             ItemDAO.inserir(itemNovo, ComprasIdeiaActivity.this);
+                            ItemDAO.checkItem(itemNovo, ComprasIdeiaActivity.this);
                             alert("Item adicionado à lista!");
 
                             carregarItens(false, false);
@@ -468,6 +450,29 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         lista = ItemDAO.listar(idLista, this);
         ListaCompras adapter = new ListaCompras(this, lista, mostrarTvPreco, mostrarBtnExcluir);
         lvCompra.setAdapter(adapter);
+    }
+
+
+
+    private boolean acheiItem(ItemQR itemQR){
+        boolean acheiItem = false;
+        for (int i = 0; i < lvCompra.getCount(); i++){
+
+            Item item = (Item) lvCompra.getItemAtPosition(i);
+            final String nomeItemQR = itemQR.getNome();
+            final String precoItemQR = itemQR.getPreco();
+
+            if (item.getNome().toString().contains(nomeItemQR)){
+                item.setCheck(1);
+                ItemDAO.checkItem(item, ComprasIdeiaActivity.this);
+                acheiItem = true;
+                break;
+            }else {
+                acheiItem = false;
+            }
+
+        }
+        return acheiItem;
     }
 
 
