@@ -35,6 +35,7 @@ public class Conexao extends SQLiteOpenHelper {
                 " id INTEGER NOT NULL PRIMARY KEY ," +
                 " nome TEXT NOT NULL , " +
                 " quantidade TEXT , " +
+                " preco TEXT , " +
                 " codLista INTEGER NOT NULL, " +
                 " checked INTEGER DEFAULT 0)");
     }

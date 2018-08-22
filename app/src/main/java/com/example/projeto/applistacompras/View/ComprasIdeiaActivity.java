@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projeto.applistacompras.Adapters.ListaCompras;
+import com.example.projeto.applistacompras.Adapters.Mascaras;
 import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Controller.ListaDAO;
 import com.example.projeto.applistacompras.Model.Item;
@@ -75,6 +76,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         tvSubTotal = (TextView) findViewById(R.id.tvSubTotal);
         tvValorSubTotal = (TextView) findViewById(R.id.tvValorSubTotal);
         etData = (EditText) findViewById(R.id.etData);
+        etData.addTextChangedListener(Mascaras.mask(etData, Mascaras.FORMAT_DATE));
         btnSalvar = (Button) findViewById(R.id.btnSalvar);
         llIniciarCompraSuperior = (LinearLayout) findViewById(R.id.llIniciarCompraSuperior);
         final FloatingActionButton fabCamera = (FloatingActionButton) findViewById(R.id.fabCamera);
@@ -401,18 +403,18 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                             itemNovo.setPreco(precoItemQR);
                             itemNovo.setQuantidade("1");
                             itemNovo.setCodLista(idLista);
-                            ItemDAO.inserir(itemNovo, ComprasIdeiaActivity.this);
+                            itemNovo.setId(ItemDAO.inserir(itemNovo, ComprasIdeiaActivity.this));
                             ItemDAO.checkItem(itemNovo, ComprasIdeiaActivity.this);
                             alert("Item adicionado à lista!");
 
-                            carregarItens(false, false);
+                            carregarItens(true, false);
                         }
                     });
                     alerta.setNegativeButton("Não", null);
                     alerta.show();
                 }else{
 
-                    carregarItens(false, false);
+                    carregarItens(true, false);
                 }
 
 

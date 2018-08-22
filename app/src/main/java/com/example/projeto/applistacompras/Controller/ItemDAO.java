@@ -43,15 +43,29 @@ public class ItemDAO {
         conn.executar(sql);
     }
 
-    public static void inserir(Item item, Context contexto) {
+    public static int inserir(Item item, Context contexto) {
 
-        String sql = "INSERT INTO item ( nome, quantidade, codLista) " +
+        String sql = "INSERT INTO item ( nome, quantidade, preco, codLista) " +
                 "VALUES ( '" + item.getNome() + "' , " +
                 "  '" + item.getQuantidade() + "' , " +
+                "  '" + item.getPreco() + "' , " +
                 "   " + item.getCodLista() + " ) ";
 
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
+
+        return buscarMaiorIDoItem(contexto);
+    }
+
+    public static int buscarMaiorIDoItem(Context contexto) {
+        String sql = "SELECT MAX(ID) FROM item";
+
+        Conexao conn = new Conexao(contexto);
+        Cursor c = conn.consulta(sql);
+        c.moveToFirst();
+
+        int idMax = c.getInt(0);
+        return idMax;
     }
 
     public static List<Item> listar(int codLista, Context contexto) {
@@ -75,8 +89,9 @@ public class ItemDAO {
                 item.setId(tabela.getInt(0));
                 item.setNome(tabela.getString(1));
                 item.setQuantidade(tabela.getString(2));
-                item.setCodLista(tabela.getInt(3));
-                item.setCheck(tabela.getInt(4));
+                item.setPreco(tabela.getString(3));
+                item.setCodLista(tabela.getInt(4));
+                item.setCheck(tabela.getInt(5));
 
 
                 if (item.getCheck() == 1){

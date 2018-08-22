@@ -53,7 +53,7 @@ public class ListasActivity extends AppCompatActivity {
                         int mes = calendario.getMonth();
                         int dia = calendario.getDayOfMonth();
 
-                        final String data = dia + "/" + (mes + 1) + "/" + ano;
+                        final String data = dia + "/0" + (mes + 1) + "/" + ano;
 
                         ListaDAO.criarLista(data, ListasActivity.this);
                         int idLista = ListaDAO.buscarMaiorIDdaLista(ListasActivity.this);

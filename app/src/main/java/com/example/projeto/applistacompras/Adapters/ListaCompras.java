@@ -117,6 +117,7 @@ public class ListaCompras extends BaseAdapter {
 
         suporte.tvNome.setText(item.getNome());
         suporte.tvQuantidade.setText(item.getQuantidade());
+        suporte.tvPreco.setText(item.getPreco());
 
 //        if (i % 2 == 0) {
 //            suporte.layout.setBackgroundColor(Color.WHITE);
@@ -127,9 +128,6 @@ public class ListaCompras extends BaseAdapter {
         if (item.getCheck() == 1){
             suporte.layout.setBackgroundColor(Color.rgb(0, 200, 0));
         }
-
-
-
 
         return view;
     }
