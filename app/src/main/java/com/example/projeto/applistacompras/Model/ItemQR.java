@@ -2,7 +2,8 @@ package com.example.projeto.applistacompras.Model;
 
 public class ItemQR {
 
-    private String nome, preco, validade;
+    private String nome, validade;
+    private Double preco;
 
 
     @Override
@@ -23,11 +24,11 @@ public class ItemQR {
         this.nome = nome;
     }
 
-    public String getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(String preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 

@@ -381,9 +381,11 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 final String precoItemQR = itemGetByQR[1];
                 String validadeItemQR = itemGetByQR[2];
 
+                final Double precoItem = Double.parseDouble(precoItemQR);
+
                 itemQR = new ItemQR();
                 itemQR.setNome(nomeItemQR);
-                itemQR.setPreco(precoItemQR);
+                itemQR.setPreco(precoItem);
                 itemQR.setValidade(validadeItemQR);
 
 
@@ -394,13 +396,12 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                     alerta.setMessage("Deseja adicionar o " + nomeItemQR + " à lista?");
                     alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
 
-                        //TERMINAR ESSAS LINHAS, NAO TA DANDO CHECK ASSIM QUE ADICIONA A LISTA
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Item itemNovo = new Item();
                             itemNovo.setNome(nomeItemQR);
                             itemNovo.setCheck(1);
-                            itemNovo.setPreco(precoItemQR);
+                            itemNovo.setPreco(precoItem);
                             itemNovo.setQuantidade("1");
                             itemNovo.setCodLista(idLista);
                             itemNovo.setId(ItemDAO.inserir(itemNovo, ComprasIdeiaActivity.this));
@@ -452,6 +453,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         lista = ItemDAO.listar(idLista, this);
         ListaCompras adapter = new ListaCompras(this, lista, mostrarTvPreco, mostrarBtnExcluir);
         lvCompra.setAdapter(adapter);
+        calcular();
     }
 
 
@@ -462,10 +464,11 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
             Item item = (Item) lvCompra.getItemAtPosition(i);
             final String nomeItemQR = itemQR.getNome();
-            final String precoItemQR = itemQR.getPreco();
+            final Double precoItemQR = itemQR.getPreco();
 
-            if (item.getNome().toString().contains(nomeItemQR)){
+            if (nomeItemQR.contains(item.getNome())){
                 item.setCheck(1);
+                item.setPreco(precoItemQR);
                 ItemDAO.checkItem(item, ComprasIdeiaActivity.this);
                 acheiItem = true;
                 break;
@@ -487,13 +490,15 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 //    }
 
 
-
-
-
-
-
-
-
+    private void calcular(){
+        Double total = 0d;
+        for(Item item : lista){
+            total += item.getPreco();
+            String subtotal = String.valueOf(total);
+            subtotal = subtotal.replace("." , ",");
+            tvValorSubTotal.setText("R$" + subtotal);
+        }
+    }
 
 
     @Override

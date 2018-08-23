@@ -117,7 +117,9 @@ public class ListaCompras extends BaseAdapter {
 
         suporte.tvNome.setText(item.getNome());
         suporte.tvQuantidade.setText(item.getQuantidade());
-        suporte.tvPreco.setText(item.getPreco());
+        String preco = String.valueOf(item.getPreco());
+        preco = preco.replace("." , ",");
+        suporte.tvPreco.setText("R$"+ preco);
 
 //        if (i % 2 == 0) {
 //            suporte.layout.setBackgroundColor(Color.WHITE);

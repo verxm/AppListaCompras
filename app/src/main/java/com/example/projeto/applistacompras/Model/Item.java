@@ -5,7 +5,7 @@ public class Item {
     private String quantidade;
     private String nome;
     private int check;
-    private String preco;
+    private Double preco;
 
 
 
@@ -54,11 +54,11 @@ public class Item {
         this.check = check;
     }
 
-    public String getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(String preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 }

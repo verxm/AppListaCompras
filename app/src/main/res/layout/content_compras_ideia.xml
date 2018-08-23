@@ -54,7 +54,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="R$00.00"
+                android:text="R$0,00"
                 style="@style/labels"
                 android:layout_marginTop="8sp"
                 android:layout_marginLeft="10sp"

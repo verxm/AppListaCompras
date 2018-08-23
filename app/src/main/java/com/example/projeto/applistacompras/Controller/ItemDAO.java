@@ -19,7 +19,7 @@ public class ItemDAO {
         }else{
             verdadeiroOUfalso = 0;
         }
-        String sql ="UPDATE item SET checked = " + verdadeiroOUfalso + " WHERE id = " + item.getId();
+        String sql ="UPDATE item SET checked = " + verdadeiroOUfalso + "  , preco = "+ item.getPreco() + " WHERE id = " + item.getId();
 
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
@@ -89,7 +89,7 @@ public class ItemDAO {
                 item.setId(tabela.getInt(0));
                 item.setNome(tabela.getString(1));
                 item.setQuantidade(tabela.getString(2));
-                item.setPreco(tabela.getString(3));
+                item.setPreco(tabela.getDouble(3));
                 item.setCodLista(tabela.getInt(4));
                 item.setCheck(tabela.getInt(5));
 
