@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
@@ -26,7 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.projeto.applistacompras.Adapters.ListaCompras;
 import com.example.projeto.applistacompras.Adapters.Mascaras;
 import com.example.projeto.applistacompras.Controller.ItemDAO;
@@ -50,12 +52,15 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     private Button btnIniciarCompra, btnSalvar;
     private TextView tvData, tvSubTotal, tvValorSubTotal;
     private EditText etData;
-    private  String dataLista;
+    private String dataLista;
     private LinearLayout llIniciarCompraSuperior;
     private ItemQR itemQR;
 
+    private Toolbar toolbar;
+    private int ultimaPosicaoClicada = -1;
 
 
+    private Menu menuTela;
 
 
     @SuppressLint("RestrictedApi")
@@ -63,8 +68,15 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compras_ideia);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
+
+
+
+
+
+
+
 
 
         idLista = getIntent().getExtras().getInt("codLista");
@@ -95,9 +107,39 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         etData.setText(dataLista);
 
 
+
+
+
+
+        lvCompra.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (menuTela.size() == 1) {
+                    getMenuInflater().inflate(R.menu.menu1, menuTela);
+                    toolbar.setTitle("Excluir Item");
+                }
+
+                ultimaPosicaoClicada = i;
+
+
+                return true;
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
         final Activity activity = this;
 
-        //-----------------ACAO DO fabCamera---------------------
+        //--------------------------ACAO DO fabCamera---------------------------
         fabCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +151,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
             }
         });
+        //-------------------------------XXX------------------------------------
 
         final FloatingActionButton fabEditar = (FloatingActionButton) findViewById(R.id.fabEditar);
 
@@ -323,6 +366,9 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                     alerta.show();
 
                 }
+
+
+
             }
         });
         //-------------------------------------------------------XXX-----------------------------------------------------------------------
@@ -396,6 +442,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                     alerta.setMessage("Deseja adicionar o " + nomeItemQR + " à lista?");
                     alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
 
+                        //TERMINAR ESSAS LINHAS, NAO TA DANDO CHECK ASSIM QUE ADICIONA A LISTA
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Item itemNovo = new Item();
@@ -450,8 +497,8 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
     //IMPLEMENTAR OUTROS CARREGAR ITENS
     private void carregarItens(boolean mostrarTvPreco, boolean mostrarBtnExcluir) {
-        lista = ItemDAO.listar(idLista, this);
-        ListaCompras adapter = new ListaCompras(this, lista, mostrarTvPreco, mostrarBtnExcluir);
+        lista = ItemDAO.listar(idLista, ComprasIdeiaActivity.this);
+        ListaCompras adapter = new ListaCompras(ComprasIdeiaActivity.this, lista, mostrarTvPreco, mostrarBtnExcluir);
         lvCompra.setAdapter(adapter);
         calcular();
     }
@@ -463,10 +510,12 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         for (int i = 0; i < lvCompra.getCount(); i++){
 
             Item item = (Item) lvCompra.getItemAtPosition(i);
-            final String nomeItemQR = itemQR.getNome();
             final Double precoItemQR = itemQR.getPreco();
+            final String nomeItemQR = itemQR.getNome().toLowerCase();
 
-            if (nomeItemQR.contains(item.getNome())){
+            String nomeItem = item.getNome().toString().toLowerCase();
+
+            if (nomeItem.contains(nomeItemQR)){
                 item.setCheck(1);
                 item.setPreco(precoItemQR);
                 ItemDAO.checkItem(item, ComprasIdeiaActivity.this);
@@ -503,8 +552,11 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add("Excluir Lista");
-        return super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.menu_listas, menu);
+        menuTela = menu;
+
+        return true;
     }
 
 
@@ -513,12 +565,14 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
         String nomeMenu = "Excluir Lista";
 
-        if (item.toString().equals(nomeMenu)){
+        if (item.getItemId() == R.id.mnExcluirLista){
             AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
-            alerta.setTitle("Certeza que deseja excluir essa lista?");
+            alerta.setTitle("Excluir Lista");
+            alerta.setMessage("Deseja mesmo excluir essa lista?");
             alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    ItemDAO.excluirItensByCodLista(ComprasIdeiaActivity.this, idLista);
                     ListaDAO.excluir(idLista, ComprasIdeiaActivity.this);
                     Intent intent = new Intent(ComprasIdeiaActivity.this, ListasActivity.class);
                     startActivity(intent);
@@ -527,6 +581,10 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
             });
             alerta.setNegativeButton("NÃO",null);
             alerta.show();
+        }
+
+        if (item.getItemId() == R.id.itemDeletar){
+            Item itemAexcluir = (Item) lvCompra.getItemAtPosition(ultimaPosicaoClicada);
         }
 
         return super.onOptionsItemSelected(item);

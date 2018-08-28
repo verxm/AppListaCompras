@@ -136,4 +136,13 @@ public class ItemDAO {
     }
 
 
+    public static void excluirItensByCodLista(Context contexto, int codLista){
+        String sql = "DELETE FROM item WHERE codLista = " + codLista;
+
+        Conexao conn = new Conexao(contexto);
+        conn.executar(sql);
+    }
+
+
+
 }
