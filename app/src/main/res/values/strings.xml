@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lista Desnomado</string>
+    <string name="app_name">SmartMarket</string>
     <string name="action_settings">Settings</string>
 
     <string name="informeOsItens">Informe os Itens</string>
@@ -7,7 +7,7 @@
     <string name="excluirItem">Excluir selecionados</string>
     <string name="excluirLista">Excluir lista</string>
     <string name="selecionar">Selecionar</string>
-    <string name="title_activity_nova_lista">NovaListaActivity</string>
+    <string name="title_activity_nova_lista">Criar lista</string>
     <string name="title_activity_compras_ideia">ComprasIdeiaActivity</string>
 
     <string name="subTotal">SubTotal:</string>

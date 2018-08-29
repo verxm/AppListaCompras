@@ -1,18 +1,38 @@
 package com.example.projeto.applistacompras.Model;
 
+import android.widget.CheckBox;
+
 public class Item {
     private int id, codLista;
     private String quantidade;
     private String nome;
     private int check;
     private Double preco;
+    private int lactose, gluten;
 
 
+    public int getLactose() {
+        return lactose;
+    }
+
+    public void setLactose(int lactose) {
+        this.lactose = lactose;
+    }
+
+    public int getGluten() {
+        return gluten;
+    }
+
+    public void setGluten(int gluten) {
+        this.gluten = gluten;
+    }
 
     @Override
     public String toString() {
         return nome;
     }
+
+
 
     public int getCodLista() {
         return codLista;

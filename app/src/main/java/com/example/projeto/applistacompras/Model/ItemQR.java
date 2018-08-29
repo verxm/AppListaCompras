@@ -3,7 +3,28 @@ package com.example.projeto.applistacompras.Model;
 public class ItemQR {
 
     private String nome, validade;
+    private int gluten;
+    private int lactose;
     private Double preco;
+
+    public int getGluten() {
+        return gluten;
+    }
+
+    public void setGluten(int gluten) {
+        this.gluten = gluten;
+    }
+
+    public int getLactose() {
+        return lactose;
+    }
+
+    public void setLactose(int lactose) {
+        this.lactose = lactose;
+    }
+
+
+
 
 
     @Override

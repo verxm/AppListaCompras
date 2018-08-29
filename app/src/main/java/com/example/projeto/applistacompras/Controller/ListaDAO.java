@@ -58,6 +58,41 @@ public class ListaDAO {
         return listaDeItens;
     }
 
+    public static Lista getListaById(Context contexto, int id) {
+        String sql = " SELECT * FROM lista WHERE id = " + id +
+                " ORDER BY data desc";
+        Conexao conn = new Conexao(contexto);
+        Cursor tabela = conn.consulta(sql);
+
+
+        if (tabela.getCount() > 0) {
+            tabela.moveToFirst();
+
+
+            Lista item = new Lista();
+            item.setId(tabela.getInt(0));
+            item.setData(tabela.getString(1));
+            if(tabela.getInt(2)==1){
+                item.setGluten(true);
+            }else {
+                item.setGluten(false);
+
+            }
+
+            if(tabela.getInt(3)==1){
+                item.setLactose(true);
+            }else {
+                item.setLactose(false);
+
+            }
+            return item;
+
+        } else {
+
+            return null;
+        }
+    }
+
     public static void excluir(int id, Context contexto) {
 
         String sql = " DELETE FROM lista " +
@@ -66,7 +101,6 @@ public class ListaDAO {
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
     }
-
 
 
     public static void editar(String data, int idLista, Context contexto) {
@@ -78,6 +112,15 @@ public class ListaDAO {
         conn.executar(sql);
     }
 
+    public static void editarPreferencias(int idLista, int nQroLactose, int nQroGlutem, Context contexto) {
+        String sql = "UPDATE lista SET " +
+                " gluten = " + nQroGlutem + "," +
+                " lactose = " + nQroLactose + " " +
+                " WHERE id = " + idLista;
+
+        Conexao conn = new Conexao(contexto);
+        conn.executar(sql);
+    }
 
 
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ public class ListaCompras extends BaseAdapter {
     private List<Item> listaItens;
     private LayoutInflater inflater;
     private Context contexto;
-    private boolean mostrarTvPreco, mostrarBtnExcluir;
+    private boolean mostrarTvPreco, mostrarBtnExcluir, lactose, gluten;
 
     public ListaCompras(Context contexto, List<Item> lista) {
         this.listaItens = lista;
@@ -34,17 +35,15 @@ public class ListaCompras extends BaseAdapter {
     }
 
 
-    public ListaCompras(Context contexto, List<Item> lista, boolean mostrarTvPreco, boolean mostrarBtnExcluir) {
+    public ListaCompras(Context contexto, List<Item> lista, boolean mostrarTvPreco, boolean mostrarBtnExcluir, boolean lactose, boolean gluten) {
         this.listaItens = lista;
         this.inflater = LayoutInflater.from(contexto);
         this.contexto = contexto;
         this.mostrarTvPreco = mostrarTvPreco;
         this.mostrarBtnExcluir = mostrarBtnExcluir;
+        this.lactose = lactose;
+        this.gluten = gluten;
     }
-
-
-
-
 
 
     @Override
@@ -73,6 +72,7 @@ public class ListaCompras extends BaseAdapter {
             suporte = new ItemSuporte();
             suporte.tvNome = view.findViewById(R.id.llcItem);
             suporte.btnExcluir = view.findViewById(R.id.llcBtnExcluir);
+            suporte.ivAlerta = view.findViewById(R.id.llcAlerta);
 
 
             suporte.btnExcluir.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,17 @@ public class ListaCompras extends BaseAdapter {
         }
 
 
+        if (item.getLactose() == 1 && lactose){
 
+                suporte.ivAlerta.setVisibility(View.VISIBLE);
+
+        }
+
+        if (item.getGluten() == 1 && gluten){
+
+                suporte.ivAlerta.setVisibility(View.VISIBLE);
+
+        }
 
 
 
@@ -128,7 +138,7 @@ public class ListaCompras extends BaseAdapter {
 //        }
 
         if (item.getCheck() == 1){
-            suporte.layout.setBackgroundColor(Color.rgb(220,220,220));
+            suporte.layout.setBackgroundColor(Color.rgb(0, 200, 0));
         }
 
         return view;
@@ -144,5 +154,6 @@ public class ListaCompras extends BaseAdapter {
         Button btnExcluir;
         TextView tvPreco;
         LinearLayout layout;
+        ImageView ivAlerta;
     }
 }
