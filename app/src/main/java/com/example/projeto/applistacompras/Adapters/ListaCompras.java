@@ -46,10 +46,6 @@ public class ListaCompras extends BaseAdapter {
     }
 
 
-
-
-
-
     @Override
     public int getCount() {
         return listaItens.size();
