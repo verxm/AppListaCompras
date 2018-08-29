@@ -35,6 +35,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_dialog_alert"
+            android:tint="@color/red"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:id="@+id/llcAlerta"
+            android:visibility="gone"/>
+
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -58,6 +68,8 @@
                 android:layout_marginLeft="28sp"
                 android:background="@android:drawable/ic_menu_delete"
                 android:backgroundTint="@android:color/holo_red_dark" />
+
+
 
 
         </FrameLayout>

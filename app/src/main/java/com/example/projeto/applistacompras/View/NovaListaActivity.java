@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.example.projeto.applistacompras.Adapters.ItemLista;
 import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Controller.ListaDAO;
 import com.example.projeto.applistacompras.Model.Item;
+import com.example.projeto.applistacompras.Model.Lista;
 import com.example.projeto.applistacompras.R;
 
 import java.util.ArrayList;
@@ -29,13 +31,11 @@ public class NovaListaActivity extends AppCompatActivity {
     private Button btnAdicionar;
     private ListView lvItens;
     private Item item;
+    private Lista list;
     private List<Item> lista;
     private int idLista;
-
-
-
-
-
+    private CheckBox cbGluten;
+    private CheckBox cbLactose;
 
 
 
@@ -49,9 +49,12 @@ public class NovaListaActivity extends AppCompatActivity {
         idLista = getIntent().getExtras().getInt("idLista");
 
         etItem = (EditText) findViewById(R.id.etItem);
+        cbLactose = (CheckBox) findViewById(R.id.cbLactose);
+        cbGluten = (CheckBox) findViewById(R.id.cbGluten);
         etQuantidade = (EditText) findViewById(R.id.etQuantidade);
         lvItens = (ListView) findViewById(R.id.lvItens);
         btnAdicionar = (Button) findViewById(R.id.btnAdicionar);
+
 
         lista = new ArrayList<>();
 
@@ -91,6 +94,15 @@ public class NovaListaActivity extends AppCompatActivity {
                     });
                     alerta.show();
                 }else{
+                    int nQroGluten = 0;
+                    int nQroLactose = 0;
+                    if (cbGluten.isChecked()){
+                        nQroGluten = 1;
+                    }
+                    if (cbLactose.isChecked()){
+                        nQroLactose = 1;
+                    }
+                    ListaDAO.editarPreferencias(idLista, nQroLactose, nQroGluten, NovaListaActivity.this);
                     Intent i = new Intent(NovaListaActivity.this, ListasActivity.class);
                     Toast.makeText(NovaListaActivity.this, "Lista Adicionada", Toast.LENGTH_SHORT).show();
                     startActivity(i);
@@ -108,7 +120,6 @@ public class NovaListaActivity extends AppCompatActivity {
         ListaDAO.excluir(idLista, NovaListaActivity.this);
         super.onDestroy();
     }
-
 
 
     public void carregarItens() {

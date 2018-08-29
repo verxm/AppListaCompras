@@ -12,18 +12,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="60dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="06/07/2000"
             style="@style/labels"
-            android:layout_marginTop="8sp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="20sp"
             android:id="@+id/tvData"
             android:visibility="visible"
@@ -88,8 +88,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="#000"
-        android:layout_marginTop="7sp">
+        android:background="#000">
 
     </LinearLayout>
 
