@@ -64,6 +64,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     String nomeItemQR;
 
 
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
