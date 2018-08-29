@@ -72,13 +72,6 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
-
-
-
-
-
-
         idLista = getIntent().getExtras().getInt("codLista");
         dataLista = getIntent().getExtras().getString("dataLista");
 
@@ -106,6 +99,8 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         tvData.setText(dataLista);
         etData.setText(dataLista);
 
+        final FloatingActionButton fabEditar = (FloatingActionButton) findViewById(R.id.fabEditar);
+        final FloatingActionButton fabAdicionar = (FloatingActionButton) findViewById(R.id.fabAdicionar);
 
 
 
@@ -114,12 +109,38 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         lvCompra.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (menuTela.size() == 1) {
-                    getMenuInflater().inflate(R.menu.menu1, menuTela);
-                    toolbar.setTitle("Excluir Item");
+//                if (menuTela.size() == 1) {
+//                    getMenuInflater().inflate(R.menu.menu1, menuTela);
+//                    toolbar.setTitle("Excluir Item");
+//                }
+//
+//                ultimaPosicaoClicada = i;
+
+                if (tvSubTotal.getVisibility() == View.GONE) {
+
+                    final Item itemLongClick = (Item) lvCompra.getItemAtPosition(i);
+
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+                    alerta.setTitle("Excluir Item");
+                    alerta.setMessage("Deseja excluir o item: " + itemLongClick.getNome() + " da sua lista?").setIcon(R.drawable.ic_lixeira);
+                    alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ItemDAO.excluir(itemLongClick.getId(), ComprasIdeiaActivity.this);
+                            alert(itemLongClick.getNome().toString() + " excluido!");
+                            if (fabEditar.getVisibility() == View.VISIBLE) {
+                                carregarItens(false, true);
+                            }
+                            if (fabAdicionar.getVisibility() == View.VISIBLE) {
+                                carregarItens(false, false);
+                            }
+                        }
+                    });
+                    alerta.setNegativeButton("NÃO", null);
+                    alerta.show();
+
                 }
 
-                ultimaPosicaoClicada = i;
 
 
                 return true;
@@ -153,7 +174,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         });
         //-------------------------------XXX------------------------------------
 
-        final FloatingActionButton fabEditar = (FloatingActionButton) findViewById(R.id.fabEditar);
+
 
 
 
@@ -161,7 +182,6 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
 
         //-----------------------------------------------ACAO DO fabAdicionar-----------------------------------------------------------
-        final FloatingActionButton fabAdicionar = (FloatingActionButton) findViewById(R.id.fabAdicionar);
         fabAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,7 +189,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
 
                 alerta.setTitle("Adicionar Item");
-
+                alerta.setIcon(R.drawable.ic_add1);
 
                 final EditText etItem = new EditText(ComprasIdeiaActivity.this);
                 etItem.setHint("Informe o Item");
@@ -235,8 +255,6 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                     tvData.setVisibility(View.GONE);
 
                     carregarItens(false, false);
-
-
 
 
                 }
