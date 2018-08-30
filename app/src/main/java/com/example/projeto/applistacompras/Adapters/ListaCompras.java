@@ -71,6 +71,7 @@ public class ListaCompras extends BaseAdapter {
             view = inflater.inflate(R.layout.layout_lista_compras, null);
             suporte = new ItemSuporte();
             suporte.tvNome = view.findViewById(R.id.llcItem);
+            suporte.tvSubtotal = view.findViewById(R.id.llctvSubtotal);
             suporte.btnExcluir = view.findViewById(R.id.llcBtnExcluir);
             suporte.ivAlerta = view.findViewById(R.id.llcAlerta);
 
@@ -127,9 +128,13 @@ public class ListaCompras extends BaseAdapter {
 
         suporte.tvNome.setText(item.getNome());
         suporte.tvQuantidade.setText(item.getQuantidade());
+        String subtotal = String.valueOf( item.getPreco()*Integer.valueOf(item.getQuantidade()));
+        suporte.tvSubtotal.setText( "R$ " + subtotal.replace("." , ","));
         String preco = String.valueOf(item.getPreco());
         preco = preco.replace("." , ",");
-        suporte.tvPreco.setText("R$"+ preco);
+        suporte.tvPreco.setText("R$ "+ preco);
+
+
 
 //        if (i % 2 == 0) {
 //            suporte.layout.setBackgroundColor(Color.WHITE);
@@ -150,7 +155,7 @@ public class ListaCompras extends BaseAdapter {
 
 
     private class ItemSuporte {
-        TextView tvNome, tvQuantidade;
+        TextView tvNome, tvQuantidade, tvSubtotal;
         Button btnExcluir;
         TextView tvPreco;
         LinearLayout layout;

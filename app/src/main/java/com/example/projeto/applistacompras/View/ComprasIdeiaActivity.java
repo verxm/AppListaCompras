@@ -63,7 +63,11 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     double precoItem;
     String nomeItemQR;
 
+    private int retorno;
 
+    private static final int SEM_RESTRICAO_SALVAR = 1;
+    private static final int COM_RESTRICAO_SALVAR = 2;
+    private static final int COM_RESTRICAO_NAO_SALVAR = 3;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -367,13 +371,12 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
                 list = ListaDAO.getListaById(this, idLista);
 
-                if (list.isLactose() || list.isGluten()) {
-                    verificarPreferencia();
-                } else {
 
-                    boolean acheiItem = acheiItem(itemQR);
+                boolean acheiItem = acheiItem(itemQR);
 
-                    if (!acheiItem) {
+                if (!acheiItem) {
+
+                    if (verificarPreferencia() == SEM_RESTRICAO_SALVAR) {
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
                         alerta.setTitle("Item não encontrado!");
@@ -398,10 +401,11 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                         });
                         alerta.setNegativeButton("Não", null);
                         alerta.show();
-                    } else {
 
-                        carregarItens(true, false);
                     }
+                } else {
+
+                    carregarItens(true, false);
                 }
 
 //                String textoTeste = "Nome: " + nomeItemQR + "; Quantidade: " + quantidadeItemQR + "; Unidade: " + unidadeItemQR + "; Preco: " + precoItemQR + "Validade: " + validadeItemQR;
@@ -411,14 +415,77 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 //                alerta.show();
 
 
-                } else{
-                    alert("Scan cancelado");
-                }
             } else {
-                super.onActivityResult(requestCode, resultCode, data);
+                alert("Scan cancelado");
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private int verificarPreferencia() {
+        boolean temRestricao = false;
+        retorno = 0;
+        list = ListaDAO.getListaById(this, idLista);
+        String msg = "";
+        if (list.isGluten()) {
+            gluten = 1;
+        }
+        if (list.isLactose()) {
+            lactose = 1;
+        }
+        if (lactose == lactoseItem && gluten == glutenItem) {
+            msg = "Item contém Glúten e Lactose!";
+            temRestricao = true;
+        }else {
+            if (gluten == glutenItem) {
+                msg = "Item contém Glúten!";
+                temRestricao = true;
+            }
+            if (lactose == lactoseItem) {
+                msg = "Item contém lactose!";
+                temRestricao = true;
             }
         }
 
+        if (temRestricao) {
+
+            //TERMINAR AMANHA
+            AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
+            alerta.setTitle(msg);
+            alerta.setMessage("Deseja adicionar mesmo assim?");
+            alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    Item itemNovo = new Item();
+                    itemNovo.setNome(nomeItemQR);
+                    itemNovo.setCheck(1);
+                    itemNovo.setPreco(precoItem);
+                    itemNovo.setQuantidade("1");
+                    itemNovo.setCodLista(idLista);
+                    itemNovo.setId(ItemDAO.inserir(itemNovo, ComprasIdeiaActivity.this));
+                    ItemDAO.checkItem(itemNovo, ComprasIdeiaActivity.this);
+                    alert("Item adicionado à lista!");
+
+                    carregarItens(true, false);
+                    retorno = COM_RESTRICAO_SALVAR;
+                }
+            });
+            alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    retorno = COM_RESTRICAO_NAO_SALVAR;
+                }
+            });
+            alerta.show();
+
+        } else {
+            retorno = SEM_RESTRICAO_SALVAR;
+        }
+
+        return retorno;
+    }
 
 
     private void alert(String msg) {
@@ -433,62 +500,17 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         boolean lactose = false;
         boolean gluten = false;
 
-        if (listinha.isGluten()){
+        if (listinha.isGluten()) {
             gluten = true;
         }
 
-        if (listinha.isLactose()){
+        if (listinha.isLactose()) {
             lactose = true;
         }
 
         ListaCompras adapter = new ListaCompras(this, lista, mostrarTvPreco, mostrarBtnExcluir, lactose, gluten);
         lvCompra.setAdapter(adapter);
         calcular();
-    }
-
-
-    private void verificarPreferencia() {
-        list = ListaDAO.getListaById(this, idLista);
-        String msg = "";
-        if (list.isGluten()) {
-            gluten = 1;
-        }
-        if (list.isLactose()) {
-            lactose = 1;
-        }
-        if (gluten == glutenItem) {
-            msg = "Item contém Glúten!";
-        }
-        if (lactose == lactoseItem) {
-            msg = "Item contém lactose!";
-        }
-        if (lactose == lactoseItem && gluten == glutenItem) {
-            msg = "Item contém Glúten e Lactose!";
-        }
-
-        //TERMINAR AMANHA
-        AlertDialog.Builder alerta = new AlertDialog.Builder(ComprasIdeiaActivity.this);
-        alerta.setTitle(msg);
-        alerta.setMessage("Deseja adicionar mesmo assim?");
-        alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                Item itemNovo = new Item();
-                itemNovo.setNome(nomeItemQR);
-                itemNovo.setCheck(1);
-                itemNovo.setPreco(precoItem);
-                itemNovo.setQuantidade("1");
-                itemNovo.setCodLista(idLista);
-                itemNovo.setId(ItemDAO.inserir(itemNovo, ComprasIdeiaActivity.this));
-                ItemDAO.checkItem(itemNovo, ComprasIdeiaActivity.this);
-                alert("Item adicionado à lista!");
-
-                carregarItens(true, false);
-            }
-        });
-        alerta.setNegativeButton("Não", null);
-        alerta.show();
     }
 
 
@@ -503,6 +525,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
             if (nomeItemQR.toLowerCase().contains(item.getNome())) {
                 item.setCheck(1);
                 item.setPreco(precoItemQR);
+                item.setQuantidade( String.valueOf( Integer.valueOf(item.getQuantidade() ) + 1 ) );
                 ItemDAO.checkItem(item, ComprasIdeiaActivity.this);
                 acheiItem = true;
                 break;
@@ -525,12 +548,15 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
     private void calcular() {
         Double total = 0d;
+
         for (Item item : lista) {
-            total += item.getPreco();
-            String subtotal = String.valueOf(total);
-            subtotal = subtotal.replace(".", ",");
-            tvValorSubTotal.setText("R$" + subtotal);
+            total += item.getPreco()*Integer.valueOf(item.getQuantidade());
+
+
+
         }
+        String textoTotal = String.valueOf(total);
+        tvValorSubTotal.setText("R$" + textoTotal.replace("." , ","));
     }
 
 

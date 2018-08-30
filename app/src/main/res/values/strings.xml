@@ -11,6 +11,7 @@
     <string name="title_activity_compras_ideia">ComprasIdeiaActivity</string>
 
     <string name="subTotal">SubTotal:</string>
+    <string name="total">Total:</string>
     <string name="salvar">SALVAR</string>
     <string name="iniciarCompra">Iniciar Comprar</string>
 </resources>

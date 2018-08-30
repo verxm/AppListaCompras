@@ -20,13 +20,32 @@
             android:layout_height="wrap_content"
             android:hint="ITEM:"
             style="@style/labels"/>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/llcQuantidade"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Quantidade:"
             style="@style/labels"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" X "
+            style="@style/labels"/>
+
+        <TextView
+            android:id="@+id/llctvPrecoItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="preco"
+            style="@style/labels"/>
+
+
+    </LinearLayout>
+
 
     </LinearLayout>
 
@@ -57,8 +76,9 @@
                 android:layout_marginTop="10sp"
                 android:layout_marginRight="20sp"
                 style="@style/labels"
-                android:id="@+id/llctvPrecoItem"
+                android:id="@+id/llctvSubtotal"
                 />
+
 
             <Button
                 android:id="@+id/llcBtnExcluir"
