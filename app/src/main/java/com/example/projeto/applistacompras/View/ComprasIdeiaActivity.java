@@ -528,11 +528,13 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
 
             Item item = (Item) lvCompra.getItemAtPosition(i);
             final String nomeItemQR = itemQR.getNome().toLowerCase();
+            final String nomeItem = itemQR.getNome();
             final Double precoItemQR = itemQR.getPreco();
 
-            if (nomeItemQR.toLowerCase().contains(item.getNome())) {
+            if (nomeItemQR.contains(item.getNome().toLowerCase())) {
                 item.setCheck(1);
                 item.setPreco(precoItemQR);
+                item.setNome(nomeItem);
                 item.setQuantidade(String.valueOf(Integer.valueOf(item.getQuantidade()) + 1));
                 ItemDAO.checkItem(item, ComprasIdeiaActivity.this);
                 acheiItem = true;
@@ -557,8 +559,15 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     private void calcular() {
         Double total = 0d;
 
+
         for (Item item : lista) {
-            total += item.getPreco() * Integer.valueOf(item.getQuantidade());
+
+            String qtd = item.getQuantidade();
+            if (qtd.isEmpty())
+                qtd = "0";
+            else
+                qtd = qtd.replace(",", ".");
+            total += item.getPreco() * Integer.valueOf(qtd);
 
 
         }

@@ -19,7 +19,7 @@ public class ItemDAO {
         }else{
             verdadeiroOUfalso = 0;
         }
-        String sql ="UPDATE item SET checked = " + verdadeiroOUfalso + "  , preco = "+ item.getPreco() + " , quantidade = " + item.getQuantidade() + " WHERE id = " + item.getId();
+        String sql ="UPDATE item SET checked = " + verdadeiroOUfalso + " , nome = " + item.getNome() + "  , preco = "+ item.getPreco() + " , quantidade = " + item.getQuantidade() + " WHERE id = " + item.getId();
 
         Conexao conn = new Conexao(contexto);
         conn.executar(sql);
