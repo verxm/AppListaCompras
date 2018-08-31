@@ -73,16 +73,16 @@ public class ListaDAO {
             item.setId(tabela.getInt(0));
             item.setData(tabela.getString(1));
             if(tabela.getInt(2)==1){
-                item.setGluten(true);
+                item.setGluten(1);
             }else {
-                item.setGluten(false);
+                item.setGluten(0);
 
             }
 
             if(tabela.getInt(3)==1){
-                item.setLactose(true);
+                item.setLactose(1);
             }else {
-                item.setLactose(false);
+                item.setLactose(0);
 
             }
             return item;

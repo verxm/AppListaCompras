@@ -10,29 +10,25 @@ public class Lista {
     private int id;
     private String data;
     private ArrayList<Item> listaDeItens;
-    private boolean gluten;
-    private boolean lactose;
 
-    public boolean isGluten() {
+    public int getGluten() {
         return gluten;
     }
 
-    public void setGluten(boolean gluten) {
+    public void setGluten(int gluten) {
         this.gluten = gluten;
     }
 
-    public boolean isLactose() {
+    public int getLactose() {
         return lactose;
     }
 
-    public void setLactose(boolean lactose) {
+    public void setLactose(int lactose) {
         this.lactose = lactose;
     }
 
-
-
-
-
+    private int gluten;
+    private int lactose;
 
 
     @Override

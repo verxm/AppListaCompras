@@ -8,7 +8,7 @@
     <string name="excluirLista">Excluir lista</string>
     <string name="selecionar">Selecionar</string>
     <string name="title_activity_nova_lista">Criar lista</string>
-    <string name="title_activity_compras_ideia">ComprasIdeiaActivity</string>
+    <string name="title_activity_compras_ideia">Sua lista de compras</string>
 
     <string name="subTotal">SubTotal:</string>
     <string name="total">Total:</string>

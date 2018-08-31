@@ -24,7 +24,7 @@ public class ListaCompras extends BaseAdapter {
     private List<Item> listaItens;
     private LayoutInflater inflater;
     private Context contexto;
-    private boolean mostrarTvPreco, mostrarBtnExcluir, lactose, gluten;
+    private boolean mostrarTvPreco, mostrarBtnExcluir;
 
     public ListaCompras(Context contexto, List<Item> lista) {
         this.listaItens = lista;
@@ -35,14 +35,12 @@ public class ListaCompras extends BaseAdapter {
     }
 
 
-    public ListaCompras(Context contexto, List<Item> lista, boolean mostrarTvPreco, boolean mostrarBtnExcluir, boolean lactose, boolean gluten) {
+    public ListaCompras(Context contexto, List<Item> lista, boolean mostrarTvPreco, boolean mostrarBtnExcluir) {
         this.listaItens = lista;
         this.inflater = LayoutInflater.from(contexto);
         this.contexto = contexto;
         this.mostrarTvPreco = mostrarTvPreco;
         this.mostrarBtnExcluir = mostrarBtnExcluir;
-        this.lactose = lactose;
-        this.gluten = gluten;
     }
 
 
@@ -97,21 +95,6 @@ public class ListaCompras extends BaseAdapter {
         }
 
 
-        if (item.getLactose() == 1 && lactose){
-
-                suporte.ivAlerta.setVisibility(View.VISIBLE);
-
-        }
-
-        if (item.getGluten() == 1 && gluten){
-
-                suporte.ivAlerta.setVisibility(View.VISIBLE);
-
-        }
-
-
-
-
         //----------------------MOSTRAR PRECO E BTNEXCLUIR OU NAO-----------------------
         if (mostrarTvPreco){
             suporte.tvPreco.setVisibility(View.VISIBLE);
@@ -128,7 +111,10 @@ public class ListaCompras extends BaseAdapter {
 
         suporte.tvNome.setText(item.getNome());
         suporte.tvQuantidade.setText(item.getQuantidade());
-        String subtotal = String.valueOf( item.getPreco()*Integer.valueOf(item.getQuantidade()));
+        String qtd = item.getQuantidade();
+        if (qtd.isEmpty())
+            qtd = "0";
+        String subtotal = String.valueOf( item.getPreco()*Integer.valueOf(qtd));
         suporte.tvSubtotal.setText( "R$ " + subtotal.replace("." , ","));
         String preco = String.valueOf(item.getPreco());
         preco = preco.replace("." , ",");

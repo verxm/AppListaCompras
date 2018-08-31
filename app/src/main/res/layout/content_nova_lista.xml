@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrapbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:fontawesometext="http://schemas.android.com/apk/res-auto"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    xmlns:bootstrapthumbnail="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".View.NovaListaActivity"
     tools:showIn="@layout/activity_nova_lista">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -109,18 +115,23 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <EditText
+                <com.beardedhen.androidbootstrap.BootstrapEditText
                     android:id="@+id/etItem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+                    app:bootstrapSize="xl"
+                    android:inputType="textCapSentences"
+                    bootstrapbutton:roundedCorners="true"/>
 
-                <EditText
+                <com.beardedhen.androidbootstrap.BootstrapEditText
                     android:id="@+id/etQuantidade"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    app:bootstrapSize="xl"
+                    bootstrapbutton:roundedCorners="true"/>
 
 
             </LinearLayout>
@@ -130,12 +141,13 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <Button
+                <com.beardedhen.androidbootstrap.BootstrapButton
                     android:id="@+id/btnAdicionar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-
+                    app:bootstrapSize="xl"
+                    app:bootstrapBrand="success"
                     android:layout_marginTop="10sp"
                     android:text="Adicionar" />
 

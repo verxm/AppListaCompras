@@ -8,13 +8,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.example.projeto.applistacompras.Adapters.ItemLista;
 import com.example.projeto.applistacompras.Controller.ItemDAO;
 import com.example.projeto.applistacompras.Controller.ListaDAO;
@@ -28,7 +27,7 @@ import java.util.List;
 public class NovaListaActivity extends AppCompatActivity {
 
     private EditText etItem, etQuantidade;
-    private Button btnAdicionar;
+    private BootstrapButton btnAdicionar;
     private ListView lvItens;
     private Item item;
     private Lista list;
@@ -53,7 +52,7 @@ public class NovaListaActivity extends AppCompatActivity {
         cbGluten = (CheckBox) findViewById(R.id.cbGluten);
         etQuantidade = (EditText) findViewById(R.id.etQuantidade);
         lvItens = (ListView) findViewById(R.id.lvItens);
-        btnAdicionar = (Button) findViewById(R.id.btnAdicionar);
+        btnAdicionar = findViewById(R.id.btnAdicionar);
 
 
         lista = new ArrayList<>();

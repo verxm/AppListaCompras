@@ -63,6 +63,8 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     double precoItem;
     String nomeItemQR;
 
+    private int restringeGlutem, restringeLactose;
+
     private int retorno;
 
     private static final int SEM_RESTRICAO_SALVAR = 1;
@@ -103,6 +105,10 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         etData.setVisibility(View.GONE);
         btnSalvar.setVisibility(View.GONE);
         lvCompra.setEnabled(true);
+
+        list = ListaDAO.getListaById(this, idLista);
+        restringeGlutem = list.getGluten();
+        restringeLactose = list.getLactose();
 
         //----------------------------------------------------------
 
@@ -369,9 +375,6 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 itemQR.setGluten(glutenItem);
                 itemQR.setLactose(lactoseItem);
 
-                list = ListaDAO.getListaById(this, idLista);
-
-
                 boolean acheiItem = acheiItem(itemQR);
 
                 if (!acheiItem) {
@@ -426,27 +429,42 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     private int verificarPreferencia() {
         boolean temRestricao = false;
         retorno = 0;
-        list = ListaDAO.getListaById(this, idLista);
+//        list = ListaDAO.getListaById(this, idLista);
         String msg = "";
-        if (list.isGluten()) {
-            gluten = 1;
-        }
-        if (list.isLactose()) {
-            lactose = 1;
-        }
-        if (lactose == lactoseItem && gluten == glutenItem) {
-            msg = "Item contém Glúten e Lactose!";
-            temRestricao = true;
+
+        if( restringeLactose  == 1  && restringeGlutem == 1 ){
+
+            if ( lactoseItem == 1 &&  glutenItem == 1 ) {
+                msg = "Item contém Glúten e Lactose!";
+                temRestricao = true;
+            } else {
+                if (glutenItem == 1 ) {
+                    msg = "Item contém Glúten!";
+                    temRestricao = true;
+                }
+                if (lactoseItem == 1) {
+                    msg = "Item contém lactose!";
+                    temRestricao = true;
+                }
+            }
         }else {
-            if (gluten == glutenItem) {
-                msg = "Item contém Glúten!";
-                temRestricao = true;
+            if ( restringeGlutem == 1 ){
+                if (glutenItem == 1 ) {
+                    msg = "Item contém Glúten!";
+                    temRestricao = true;
+                }
             }
-            if (lactose == lactoseItem) {
-                msg = "Item contém lactose!";
-                temRestricao = true;
+            if (restringeLactose == 1) {
+                if (glutenItem == 1 ) {
+                    msg = "Item contém lactose!";
+                    temRestricao = true;
+                }
             }
+
+
         }
+
+
 
         if (temRestricao) {
 
@@ -497,18 +515,8 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
     private void carregarItens(boolean mostrarTvPreco, boolean mostrarBtnExcluir) {
         lista = ItemDAO.listar(idLista, this);
         Lista listinha = ListaDAO.getListaById(ComprasIdeiaActivity.this, idLista);
-        boolean lactose = false;
-        boolean gluten = false;
 
-        if (listinha.isGluten()) {
-            gluten = true;
-        }
-
-        if (listinha.isLactose()) {
-            lactose = true;
-        }
-
-        ListaCompras adapter = new ListaCompras(this, lista, mostrarTvPreco, mostrarBtnExcluir, lactose, gluten);
+        ListaCompras adapter = new ListaCompras(this, lista, mostrarTvPreco, mostrarBtnExcluir);
         lvCompra.setAdapter(adapter);
         calcular();
     }
@@ -525,7 +533,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
             if (nomeItemQR.toLowerCase().contains(item.getNome())) {
                 item.setCheck(1);
                 item.setPreco(precoItemQR);
-                item.setQuantidade( String.valueOf( Integer.valueOf(item.getQuantidade() ) + 1 ) );
+                item.setQuantidade(String.valueOf(Integer.valueOf(item.getQuantidade()) + 1));
                 ItemDAO.checkItem(item, ComprasIdeiaActivity.this);
                 acheiItem = true;
                 break;
@@ -550,13 +558,12 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
         Double total = 0d;
 
         for (Item item : lista) {
-            total += item.getPreco()*Integer.valueOf(item.getQuantidade());
-
+            total += item.getPreco() * Integer.valueOf(item.getQuantidade());
 
 
         }
         String textoTotal = String.valueOf(total);
-        tvValorSubTotal.setText("R$" + textoTotal.replace("." , ","));
+        tvValorSubTotal.setText("R$" + textoTotal.replace(".", ","));
     }
 
 
@@ -579,6 +586,7 @@ public class ComprasIdeiaActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     ListaDAO.excluir(idLista, ComprasIdeiaActivity.this);
+                    ItemDAO.excluirItensByCodLista(ComprasIdeiaActivity.this, idLista);
                     Intent intent = new Intent(ComprasIdeiaActivity.this, ListasActivity.class);
                     startActivity(intent);
                     alert("Lista Excluida!");
